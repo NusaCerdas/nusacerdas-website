@@ -1638,16 +1638,18 @@ a:hover {
     height: 100vh;
     overflow: hidden;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
+    gap: clamp(16px, 3vh, 36px);
+    padding: 20px 0;
     background: linear-gradient(180deg, #000 0%, #1a0508 50%, #000 100%);
   }
   .product-reveal-canvas {
     position: relative;
     display: flex;
-    margin-top: calc(250px - 5vw);
-    align-self: flex-start;
-    width: min(80vw, 1000px);
+    flex-shrink: 0;
+    width: min(80vw, 1000px, 97.8vh);
     aspect-ratio: 16/9;
     transform-style: preserve-3d;
     perspective: 2000px;
@@ -1677,12 +1679,12 @@ a:hover {
   .device-frame.active { opacity: 1; }
 
   .product-reveal-caption {
-    position: absolute;
-    bottom: 10%;
-    left: 0; right: 0;
+    position: relative;
+    width: 100%;
     text-align: center;
     color: var(--white);
     pointer-events: none;
+    padding: 0 20px;
   }
   .product-reveal-caption .step-num {
     font-family: "Manrope", sans-serif;
