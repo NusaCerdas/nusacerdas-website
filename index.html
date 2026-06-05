@@ -1216,11 +1216,16 @@
     requestAnimationFrame(tick);
   }
 
-  /* === Nav fade-in === */
+  /* === Nav auto-hide on scroll down, reveal on scroll up === */
   const nav = document.querySelector('nav');
+  let lastScrollY = window.scrollY;
   function updateNav() {
-    if (window.scrollY > 30) nav.classList.add('scrolled');
+    const y = window.scrollY;
+    if (y > 30) nav.classList.add('scrolled');
     else nav.classList.remove('scrolled');
+    if (y > lastScrollY && y > 80) nav.classList.add('nav-hidden');
+    else nav.classList.remove('nav-hidden');
+    lastScrollY = y;
   }
   window.addEventListener('scroll', updateNav, { passive: true });
   updateNav();
