@@ -2019,7 +2019,7 @@ a:hover {
   .quiz-feature-list {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 12px;
   }
   .quiz-feature-row {
     display: flex;
