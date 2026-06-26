@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Unlock with Face ID</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg-0: #080911;
+    --bg-1: #0e1020;
+    --card: rgba(22, 25, 44, 0.55);
+    --stroke: rgba(140, 152, 220, 0.16);
+    --stroke-strong: rgba(140, 152, 220, 0.34);
+    --ink: #eef0fb;
+    --ink-dim: #9aa0c4;
+    --ink-faint: #5b6088;
+    --sky: #6ee7ff;
+    --violet: #a78bff;
+    --mint: #5ef2c0;
+    --coral: #ff6b8a;
+    --r: 22px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    font-family: "Inter", system-ui, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(120% 90% at 50% -10%, #181a36 0%, var(--bg-1) 40%, var(--bg-0) 100%);
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    overflow-x: hidden;
+  }
+
+  /* ambient aurora */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: -20%;
+    background:
+      radial-gradient(40% 40% at 25% 20%, rgba(110, 231, 255, 0.10), transparent 70%),
+      radial-gradient(45% 45% at 80% 75%, rgba(167, 139, 255, 0.12), transparent 70%);
+    filter: blur(20px);
+    z-index: 0;
+    animation: drift 22s ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    from { transform: translate3d(-2%, -1%, 0) scale(1); }
+    to   { transform: translate3d(3%, 2%, 0) scale(1.08); }
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    width: min(420px, 100%);
+    background: var(--card);
+    border: 1px solid var(--stroke);
+    border-radius: var(--r);
+    padding: 38px 32px 30px;
+    backdrop-filter: blur(26px) saturate(140%);
+    -webkit-backdrop-filter: blur(26px) saturate(140%);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.05) inset,
+      0 30px 80px -30px rgba(0,0,0,0.8);
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 26px;
+  }
+
+  /* ---------- Face ID signature glyph ---------- */
+  .scanner {
+    --c: var(--sky);
+    width: 132px;
+    height: 132px;
+    margin: 0 auto 8px;
+    position: relative;
+  }
+  .scanner svg { width: 100%; height: 100%; overflow: visible; }
+
+  .bracket {
+    stroke: var(--c);
+    stroke-width: 6;
+    stroke-linecap: round;
+    fill: none;
+    transition: stroke 0.4s ease;
+    filter: drop-shadow(0 0 8px rgba(110, 231, 255, 0.35));
+  }
+  .face {
+    stroke: var(--c);
+    stroke-width: 5.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    transition: stroke 0.4s ease, opacity 0.3s ease;
+  }
+  .scanline {
+    stroke: var(--c);
+    stroke-width: 3;
+    stroke-linecap: round;
+    opacity: 0;
+    filter: drop-shadow(0 0 6px var(--c));
+  }
+  .check {
+    stroke: var(--mint);
+    stroke-width: 7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+    opacity: 0;
+  }
+
+  /* scanning state */
+  .scanner.scanning .scanline { opacity: 1; animation: sweep 1.15s ease-in-out infinite; }
+  .scanner.scanning .face { animation: facePulse 1.15s ease-in-out infinite; }
+  @keyframes sweep {
+    0%   { transform: translateY(-34px); opacity: 0; }
+    20%  { opacity: 1; }
+    80%  { opacity: 1; }
+    100% { transform: translateY(34px); opacity: 0; }
+  }
+  @keyframes facePulse {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+  }
+
+  /* success state */
+  .scanner.success { --c: var(--mint); }
+  .scanner.success .face { opacity: 0; }
+  .scanner.success .check {
+    opacity: 1;
+    animation: draw 0.5s ease forwards;
+  }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+
+  /* error state */
+  .scanner.error { --c: var(--coral); }
+  .scanner.error { animation: shake 0.4s ease; }
+  @keyframes shake {
+    10%, 90% { transform: translateX(-2px); }
+    20%, 80% { transform: translateX(4px); }
+    30%, 50%, 70% { transform: translateX(-7px); }
+    40%, 60% { transform: translateX(7px); }
+  }
+
+  h1 {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 600;
+    font-size: 25px;
+    letter-spacing: -0.02em;
+    margin: 14px 0 6px;
+  }
+  .sub {
+    color: var(--ink-dim);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 26px;
+    min-height: 21px;
+  }
+
+  .field { text-align: left; margin-bottom: 18px; }
+  .field label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--ink-dim);
+    margin: 0 0 8px 2px;
+  }
+  .field input {
+    width: 100%;
+    background: rgba(8, 9, 18, 0.6);
+    border: 1px solid var(--stroke-strong);
+    border-radius: 13px;
+    color: var(--ink);
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    padding: 14px 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field input::placeholder { color: var(--ink-faint); }
+  .field input:focus-visible {
+    outline: none;
+    border-color: var(--sky);
+    box-shadow: 0 0 0 3px rgba(110, 231, 255, 0.18);
+  }
+
+  .btn {
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+    padding: 15px;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 15.5px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    transition: transform 0.08s ease, filter 0.2s ease, opacity 0.2s;
+  }
+  .btn:active { transform: scale(0.985); }
+  .btn:focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; }
+  .btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+
+  .btn-primary {
+    color: #0a0b14;
+    background: linear-gradient(110deg, var(--sky), var(--violet));
+    box-shadow: 0 12px 30px -12px rgba(110, 231, 255, 0.6);
+    margin-bottom: 11px;
+  }
+  .btn-primary:hover:not([disabled]) { filter: brightness(1.06); }
+
+  .btn-ghost {
+    color: var(--ink-dim);
+    background: rgba(140, 152, 220, 0.07);
+    border: 1px solid var(--stroke);
+  }
+  .btn-ghost:hover:not([disabled]) { color: var(--ink); border-color: var(--stroke-strong); }
+
+  .btn svg { width: 17px; height: 17px; }
+
+  .status {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 20px 0 0;
+    min-height: 18px;
+    color: var(--ink-faint);
+    word-break: break-word;
+  }
+  .status.ok { color: var(--mint); }
+  .status.bad { color: var(--coral); }
+
+  .divider {
+    height: 1px;
+    background: var(--stroke);
+    margin: 24px 0 20px;
+  }
+
+  .registered {
+    font-size: 12.5px;
+    color: var(--ink-dim);
+    text-align: left;
+  }
+  .registered .head {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+  }
+  .registered ul { list-style: none; margin: 0; padding: 0; }
+  .registered li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--stroke);
+  }
+  .registered li:last-child { border-bottom: none; }
+  .registered .who { display: flex; align-items: center; gap: 9px; }
+  .registered .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--mint); box-shadow: 0 0 8px var(--mint);
+  }
+  .registered .forget {
+    background: none; border: none; cursor: pointer;
+    color: var(--ink-faint); font-family: "JetBrains Mono", monospace;
+    font-size: 11px; padding: 4px 6px; border-radius: 6px;
+  }
+  .registered .forget:hover { color: var(--coral); }
+  .empty { color: var(--ink-faint); font-style: italic; }
+
+  .foot {
+    margin-top: 22px;
+    font-size: 11px;
+    color: var(--ink-faint);
+    line-height: 1.55;
+  }
+  .foot a { color: var(--ink-dim); }
+
+  @media (prefers-reduced-motion: reduce) {
+    body::before { animation: none; }
+    .scanner.scanning .scanline,
+    .scanner.scanning .face,
+    .scanner.error,
+    .scanner.success .check { animation: none; }
+    .scanner.scanning .scanline { opacity: 1; transform: translateY(0); }
+    .scanner.success .check { stroke-dashoffset: 0; }
+  }
+</style>
+</head>
+<body>
+  <main class="card" role="main">
+    <p class="eyebrow">Passwordless · WebAuthn</p>
+
+    <div class="scanner" id="scanner" aria-hidden="true">
+      <svg viewBox="0 0 132 132">
+        <!-- corner brackets -->
+        <path class="bracket" d="M20 44 V28 a8 8 0 0 1 8 -8 H44" />
+        <path class="bracket" d="M112 44 V28 a8 8 0 0 0 -8 -8 H88" />
+        <path class="bracket" d="M20 88 V104 a8 8 0 0 0 8 8 H44" />
+        <path class="bracket" d="M112 88 V104 a8 8 0 0 1 -8 8 H88" />
+        <!-- face -->
+        <g class="faceGroup">
+          <path class="face" d="M52 52 v8" />
+          <path class="face" d="M80 52 v8" />
+          <path class="face" d="M66 58 v12 l-6 4" />
+          <path class="face" d="M54 80 q12 10 24 0" />
+        </g>
+        <!-- success check -->
+        <path class="check" d="M46 67 l13 14 l27 -30" />
+        <!-- scan line -->
+        <line class="scanline" x1="30" y1="66" x2="102" y2="66" />
+      </svg>
+    </div>
+
+    <h1 id="title">Unlock with Face ID</h1>
+    <p class="sub" id="sub">Authenticate with the same face or fingerprint that unlocks your device.</p>
+
+    <div class="field">
+      <label for="username">Account name</label>
+      <input id="username" type="text" autocomplete="username" placeholder="e.g. polo@nusacerdas.id" />
+    </div>
+
+    <button class="btn btn-primary" id="loginBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V7a5 5 0 0 1 10 0v4"/><rect x="3" y="11" width="18" height="11" rx="2"/></svg>
+      Unlock with Face ID
+    </button>
+    <button class="btn btn-ghost" id="registerBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+      Set up Face ID on this device
+    </button>
+
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+
+    <div class="divider"></div>
+
+    <div class="registered">
+      <div class="head">Registered on this device</div>
+      <ul id="list"><li class="empty">No accounts yet — set one up above.</li></ul>
+    </div>
+
+    <p class="foot" id="foot"></p>
+  </main>
+
+<script>
+(() => {
+  "use strict";
+
+  const STORE_KEY = "faceid_demo_credentials";
+  const RP_NAME = "Face ID Demo";
+
+  // --- elements
+  const el = (id) => document.getElementById(id);
+  const scanner = el("scanner");
+  const statusEl = el("status");
+  const listEl = el("list");
+  const usernameEl = el("username");
+  const loginBtn = el("loginBtn");
+  const registerBtn = el("registerBtn");
+  const subEl = el("sub");
+  const footEl = el("foot");
+
+  // --- base64url helpers (ArrayBuffer <-> string)
+  const bufToB64url = (buf) => {
+    const bytes = new Uint8Array(buf);
+    let str = "";
+    for (const b of bytes) str += String.fromCharCode(b);
+    return btoa(str).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  };
+  const b64urlToBuf = (s) => {
+    s = s.replace(/-/g, "+").replace(/_/g, "/");
+    while (s.length % 4) s += "=";
+    const bin = atob(s);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return bytes.buffer;
+  };
+  const randomBuf = (n) => crypto.getRandomValues(new Uint8Array(n));
+
+  // --- persistence (works on your own deployed domain)
+  const load = () => {
+    try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }
+    catch { return {}; }
+  };
+  const save = (data) => localStorage.setItem(STORE_KEY, JSON.stringify(data));
+
+  // --- scanner state machine
+  let resetTimer;
+  const setScan = (state) => {
+    clearTimeout(resetTimer);
+    scanner.className = "scanner" + (state ? " " + state : "");
+    if (state === "success" || state === "error") {
+      resetTimer = setTimeout(() => (scanner.className = "scanner"), 2600);
+    }
+  };
+
+  const setStatus = (msg, kind = "") => {
+    statusEl.textContent = msg;
+    statusEl.className = "status" + (kind ? " " + kind : "");
+  };
+
+  const lockUI = (locked) => {
+    loginBtn.disabled = locked;
+    registerBtn.disabled = locked;
+  };
+
+  // --- render registered list
+  const renderList = () => {
+    const data = load();
+    const names = Object.keys(data);
+    if (!names.length) {
+      listEl.innerHTML = '<li class="empty">No accounts yet — set one up above.</li>';
+      return;
+    }
+    listEl.innerHTML = "";
+    for (const name of names) {
+      const li = document.createElement("li");
+      const who = document.createElement("span");
+      who.className = "who";
+      who.innerHTML = '<span class="dot"></span>';
+      who.append(document.createTextNode(name));
+      const forget = document.createElement("button");
+      forget.className = "forget";
+      forget.textContent = "forget";
+      forget.onclick = () => {
+        const d = load();
+        delete d[name];
+        save(d);
+        renderList();
+        setStatus("Removed " + name + " from this device.");
+      };
+      li.append(who, forget);
+      listEl.append(li);
+    }
+  };
+
+  // --- REGISTER (navigator.credentials.create -> triggers Face ID enrollment)
+  const register = async () => {
+    const username = usernameEl.value.trim();
+    if (!username) { usernameEl.focus(); setStatus("Enter an account name first.", "bad"); return; }
+    const data = load();
+    if (data[username]) { setStatus("That account is already set up here.", "bad"); return; }
+
+    lockUI(true);
+    setScan("scanning");
+    setStatus("Waiting for Face ID…");
+
+    try {
+      const cred = await navigator.credentials.create({
+        publicKey: {
+          challenge: randomBuf(32),                 // server-issued in production
+          rp: { name: RP_NAME, id: location.hostname },
+          user: {
+            id: randomBuf(16),
+            name: username,
+            displayName: username,
+          },
+          pubKeyCredParams: [
+            { type: "public-key", alg: -7 },         // ES256
+            { type: "public-key", alg: -257 },       // RS256
+          ],
+          authenticatorSelection: {
+            authenticatorAttachment: "platform",     // built-in Face ID / Touch ID
+            userVerification: "required",            // force biometric / passcode
+            residentKey: "preferred",
+          },
+          timeout: 60000,
+          attestation: "none",
+        },
+      });
+
+      data[username] = {
+        credentialId: bufToB64url(cred.rawId),
+        created: new Date().toISOString(),
+      };
+      save(data);
+
+      setScan("success");
+      setStatus("Face ID set up for " + username + ".", "ok");
+      renderList();
+    } catch (err) {
+      setScan("error");
+      setStatus(friendlyError(err), "bad");
+    } finally {
+      lockUI(false);
+    }
+  };
+
+  // --- LOGIN (navigator.credentials.get -> triggers Face ID prompt)
+  const login = async () => {
+    const username = usernameEl.value.trim();
+    const data = load();
+
+    let allow = [];
+    if (username) {
+      if (!data[username]) { setStatus("No Face ID set up for that account here.", "bad"); return; }
+      allow = [{ id: b64urlToBuf(data[username].credentialId), type: "public-key", transports: ["internal"] }];
+    } else {
+      // no name typed: offer any credential registered on this device
+      allow = Object.values(data).map((c) => ({
+        id: b64urlToBuf(c.credentialId), type: "public-key", transports: ["internal"],
+      }));
+      if (!allow.length) { setStatus("Set up Face ID first, then unlock.", "bad"); return; }
+    }
+
+    lockUI(true);
+    setScan("scanning");
+    setStatus("Look at your device…");
+
+    try {
+      const assertion = await navigator.credentials.get({
+        publicKey: {
+          challenge: randomBuf(32),                  // server-issued + verified in production
+          allowCredentials: allow,
+          userVerification: "required",
+          rpId: location.hostname,
+          timeout: 60000,
+        },
+      });
+
+      // Match the returned credential back to an account name
+      const usedId = bufToB64url(assertion.rawId);
+      const who = Object.keys(data).find((n) => data[n].credentialId === usedId) || username || "your account";
+
+      setScan("success");
+      setStatus("Unlocked — welcome back, " + who + ".", "ok");
+    } catch (err) {
+      setScan("error");
+      setStatus(friendlyError(err), "bad");
+    } finally {
+      lockUI(false);
+    }
+  };
+
+  const friendlyError = (err) => {
+    const n = err && err.name;
+    if (n === "NotAllowedError") return "Cancelled or timed out. Try again.";
+    if (n === "InvalidStateError") return "This device is already enrolled for that account.";
+    if (n === "SecurityError") return "Blocked: serve this over HTTPS on a real domain.";
+    if (n === "NotSupportedError") return "This browser can't use a platform authenticator.";
+    return (n ? n + ": " : "") + (err && err.message ? err.message : "Something went wrong.");
+  };
+
+  // --- capability detection
+  const init = async () => {
+    renderList();
+
+    if (!window.PublicKeyCredential) {
+      lockUI(true);
+      subEl.textContent = "This browser doesn't support WebAuthn, so Face ID login isn't available.";
+      setStatus("PublicKeyCredential unavailable.", "bad");
+      return;
+    }
+
+    const insecure = location.protocol !== "https:" &&
+      !["localhost", "127.0.0.1"].includes(location.hostname);
+    if (insecure) {
+      footEl.innerHTML = "⚠️ Open this over <b>https://</b> or <b>localhost</b>. Browsers block Face ID / WebAuthn on insecure origins and inside sandboxed previews.";
+    }
+
+    try {
+      const ok = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+      if (!ok) {
+        subEl.textContent = "No built-in biometric was detected. On iPhone open this in Safari; on Mac/Android use the device's screen-unlock.";
+        setStatus("No platform authenticator found.", "");
+      } else {
+        setStatus("Ready. Built-in biometric detected.");
+      }
+    } catch { /* non-fatal */ }
+  };
+
+  loginBtn.addEventListener("click", login);
+  registerBtn.addEventListener("click", register);
+  usernameEl.addEventListener("keydown", (e) => { if (e.key === "Enter") login(); });
+
+  init();
+})();
+</script>
+</body>
+</html>
