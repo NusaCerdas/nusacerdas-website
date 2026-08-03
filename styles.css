@@ -402,7 +402,7 @@ a:hover {
     font-weight: 600;
     transition: all .25s;
   }
-  .nav-cta-mini:hover { background: var(--red-dark); transform: translateY(-1px); box-shadow: 0 8px 20px -6px rgba(200,15,46,0.4); }
+  .nav-cta-mini:hover { background: var(--red-dark); color: var(--white); transform: translateY(-1px); box-shadow: 0 8px 20px -6px rgba(200,15,46,0.4); }
   @media (max-width: 880px) { .nav-links { display: none; } }
 
   /* ============================================== */
@@ -508,6 +508,8 @@ a:hover {
   }
   .btn-primary:hover {
     background: var(--red-dark);
+    /* wajib: aturan global a:hover menang spesifisitas atas .btn-primary */
+    color: var(--white);
     transform: translateY(-2px);
     box-shadow: 0 16px 40px -10px rgba(200, 15, 46, 0.6);
   }
@@ -1249,11 +1251,15 @@ a:hover {
   .trust-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
+    column-gap: 22px;
+    row-gap: 0;
   }
-  @media (max-width: 880px) { .trust-grid { grid-template-columns: 1fr; } }
-
   .trust-card {
+    /* subgrid: baris ikon/judul/tag/paragraf berbagi tinggi antar kartu agar divider sejajar */
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 4;
+    align-content: start;
     padding: 44px 36px 40px;
     border-radius: 20px;
     background: var(--red-soft);
@@ -1306,6 +1312,11 @@ a:hover {
     color: var(--gray-700);
   }
   .trust-card.featured p { color: rgba(255,255,255,0.9); }
+  @media (max-width: 880px) {
+    .trust-grid { grid-template-columns: 1fr; row-gap: 22px; }
+    /* satu kolom: tidak perlu penyejajaran antar kartu */
+    .trust-card { display: block; grid-row: auto; }
+  }
 
   /* ============================================== */
   /* ============== TESTIMONIALS ================= */
