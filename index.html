@@ -23,7 +23,7 @@
 
         /* Left Side: View Wrapper for Iframe and Overlay Controls */
         .viewer-wrapper { flex: 4; position: relative; display: flex; flex-direction: column; min-width: 0; }
-        .gallery-viewer { width: 100%; height: 500px; border: 1px solid #444; border-radius: 6px; background-color: #000; }
+        .gallery-viewer { width: 100%; height: 500px; border: 1px solid #444; border-radius: 6px; background-color: #000; object-fit: contain; }
 
         /* Navigation Floating Arrow Overlay Buttons */
         .nav-arrow { position: absolute; top: calc(50% - 25px); width: 50px; height: 50px; background: rgba(0, 0, 0, 0.6); border: 1px solid #555; color: white; border-radius: 50%; cursor: pointer; font-size: 24px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; user-select: none; z-index: 10; opacity: 0; visibility: hidden; }
@@ -657,8 +657,8 @@
         <div class="product-img-wrap"><img src="assets/NusaSuites- Screenshot/NusaPeriodic/Main Menu.png" alt="NusaPeriodic" /></div>
         <div class="product-info"><span class="product-tag">Kimia</span><h4>NusaPeriodic</h4><p>Tabel periodik interaktif menghubungkan unsur kimia dengan produk dan aplikasi sehari-hari.</p></div>
       </div>
-      <div class="product-card" onclick="openYTModal('qSl_Ecnb0nM')">
-        <div class="product-img-wrap"><img src="assets/NusaSuites- Screenshot/NusaChemical/Thermite no hud.png" alt="NusaChemical" /></div>
+      <div class="product-card" onclick="openSubjectGallery('NusaChem')">
+        <div class="product-img-wrap"><img src="assets/NusaChem/natrium.png" alt="NusaChemical" /></div>
         <div class="product-info"><span class="product-tag">Kimia</span><h4>NusaChemical</h4><p>Eksperimen kimia virtual yang aman dengan reaksi interaktif dan modul lab siap pakai.</p></div>
       </div>
       <div class="product-card" onclick="openSubjectGallery('NusaFisika')">
@@ -1156,7 +1156,7 @@
             <div class="viewer-wrapper">
                 <button id="prevBtn" class="nav-arrow prev-arrow" onclick="navigateGallery(-1)">&#10094;</button>
                 <button id="nextBtn" class="nav-arrow next-arrow" onclick="navigateGallery(1)">&#10095;</button>
-                <iframe id="galleryFrame" class="gallery-viewer" src=""></iframe>
+                <img id="galleryFrame" class="gallery-viewer" src="" alt="Main Image View">
             </div>
 
             <!-- Right Side Sidebar: Built dynamically based on config number -->
@@ -1825,6 +1825,11 @@
 				'Magnet 3.jpeg',
 				'Optik 2.jpeg',
 				'Timbangan.jpeg'
+            ],
+			NusaChem: [
+                'etanol.png',
+                'natrium.png',
+				'protein.png'
             ],
             NusaMath: [
                 'fungsi.png',
