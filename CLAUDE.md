@@ -8,9 +8,13 @@ Situs landing page statis untuk NusaCerdas (nusacerdas.id) — "Sistem Operasi R
 
 Tidak ada build system, package manager, framework, test, atau linter — murni HTML/CSS/JS vanilla. Untuk melihat perubahan, cukup buka `index.html` di browser (atau jalankan static server sederhana, mis. `python -m http.server`).
 
-## Peringatan Penting: Ukuran index.html
+## Gambar
 
-`index.html` hanya ~2000 baris tetapi berisi ~21 gambar base64 inline (`data:image/jpeg;base64,...`) dengan baris hingga 35.000 karakter — total ~314K token. **Jangan pernah Read seluruh file.** Gunakan Grep untuk mencari lokasi, lalu Read dengan offset/limit. Baris-baris base64 terbesar ada di sekitar baris 525–527, 707, dan 1954–2012 (kartu produk mega-menu & galeri). Jika perlu melihat baris panjang, gunakan shell dengan `cut -c1-150`.
+`index.html` (~2100 baris) tidak lagi memuat gambar base64 — semuanya file di `assets/` (gambar bekas base64 ada di `assets/embedded/`). Tetap gunakan Grep lalu Read dengan offset/limit.
+
+- Halaman memakai versi **`.webp`** (lebar maks 1600px). File PNG/JPG asli masih ada di sebelahnya sebagai sumber. Gambar baru: konversi ke WebP dulu, lalu referensikan `.webp`-nya (termasuk nama file di `fileDatabase`).
+- Setiap `<img>` di bawah hero wajib `loading="lazy" decoding="async"`; gambar hero pertama memakai `fetchpriority="high"`.
+- `<head>` berisi canonical, Open Graph/Twitter (`assets/og-image.jpg`, 1200×630) dan JSON-LD. `robots.txt` & `sitemap.xml` ada di root.
 
 ## Arsitektur Halaman
 

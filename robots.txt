@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nusacerdas.id/sitemap.xml

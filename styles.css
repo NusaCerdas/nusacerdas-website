@@ -2,7 +2,6 @@
    NUSACERDAS.ID - Global Styles
    =========================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 
 /* ── Reset & Base ── */
 *, *::before, *::after {
@@ -567,7 +566,6 @@ a:hover {
     object-fit: cover;
     object-position: center 20%;
     transform: scale(var(--hero-img-scale, 1.06));
-    transition: transform .1s linear;
   }
 
   /* Hero Slider */
@@ -1566,6 +1564,7 @@ a:hover {
     position: sticky;
     top: 0;
     height: 100vh;
+    height: 100svh; /* tinggi stabil saat toolbar browser mobile muncul/hilang */
     overflow: hidden;
     background: linear-gradient(180deg, #0a0a0a 0%, #1a0508 100%);
     display: flex;
@@ -1579,7 +1578,6 @@ a:hover {
     transform-style: preserve-3d;
     transform: translate3d(0, 0, var(--hero-z, 0px)) scale(var(--hero-scale, 1));
     will-change: transform, opacity;
-    transition: transform 0.05s linear;
   }
   .cinematic-hero-title {
     font-family: "Manrope", sans-serif;
@@ -1650,6 +1648,7 @@ a:hover {
     position: sticky;
     top: 0;
     height: 100vh;
+    height: 100svh;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -1679,8 +1678,7 @@ a:hover {
                rotateY(var(--frame-ry, 0deg))
                scale(var(--frame-scale, 1));
     opacity: var(--frame-opacity, 0);
-    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-                transform 0.05s linear;
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform, opacity;
     box-shadow: 0 60px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
   }
