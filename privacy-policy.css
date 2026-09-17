@@ -559,3 +559,29 @@ a.pp-contact-item:hover {
     align-items: flex-start;
   }
 }
+
+/* Daftar isi memakai <nav>, jadi ikut kena aturan global `nav { position: fixed; height: 64px; ... }`
+   dari styles.css (untuk nav index.html). Kembalikan ke alur normal. */
+nav.toc-nav {
+  position: static;
+  height: auto;
+  z-index: auto;
+  background: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border-bottom: 0;
+  transform: none;
+}
+
+/* Nav mobile: styles.css menyembunyikan .nav-links di <= 880px (untuk halaman utama yang punya hamburger).
+   Halaman ini hanya punya dua link, jadi tampilkan link "Home" saja. */
+@media (max-width: 880px) {
+  .nav .nav-links { display: flex; gap: 0; list-style: none; }
+  .nav .nav-links li:has(.active) { display: none; }
+  .nav .nav-links a { display: inline-block; padding: 10px 4px; }
+}
+
+/* Ukuran teks & tap target minimum */
+.toc-label { font-size: 0.75rem; }
+.pp-breadcrumb a { display: inline-block; padding-block: 6px; }
+.footer-links a { display: inline-block; padding-block: 8px; }

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<script>document.documentElement.classList.add('js')</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lab Virtual 3D: Anatomi, Biologi, Kimia, Fisika &amp; Matematika — NusaCerdas</title>
+<meta name="description" content="Simulasi 3D imersif untuk Papan Interaktif: NusaAnatomy, NusaBiology, NusaAnimal, NusaPlanet, NusaPeriodic, NusaChemical, NusaPhysic, dan NusaMath. Berfungsi tanpa internet." />
+<link rel="canonical" href="https://nusacerdas.id/lab-virtual.html" />
+<meta name="theme-color" content="#c80f2e" />
+
+<!-- Open Graph / Twitter (preview saat link dibagikan di WhatsApp, LinkedIn, dll.) -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="NusaCerdas" />
+<meta property="og:locale" content="id_ID" />
+<meta property="og:url" content="https://nusacerdas.id/lab-virtual.html" />
+<meta property="og:title" content="Lab Virtual 3D: Anatomi, Biologi, Kimia, Fisika &amp; Matematika — NusaCerdas" />
+<meta property="og:description" content="Simulasi 3D imersif untuk Papan Interaktif: NusaAnatomy, NusaBiology, NusaAnimal, NusaPlanet, NusaPeriodic, NusaChemical, NusaPhysic, dan NusaMath. Berfungsi tanpa internet." />
+<meta property="og:image" content="https://nusacerdas.id/assets/og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Logo NusaCerdas dan guru mengajar dengan papan interaktif di kelas" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Lab Virtual 3D: Anatomi, Biologi, Kimia, Fisika &amp; Matematika — NusaCerdas" />
+<meta name="twitter:description" content="Simulasi 3D imersif untuk Papan Interaktif: NusaAnatomy, NusaBiology, NusaAnimal, NusaPlanet, NusaPeriodic, NusaChemical, NusaPhysic, dan NusaMath. Berfungsi tanpa internet." />
+<meta name="twitter:image" content="https://nusacerdas.id/assets/og-image.jpg" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Beranda",
+      "item": "https://nusacerdas.id/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Lab Virtual",
+      "item": "https://nusacerdas.id/lab-virtual.html"
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/nusacerdas-logo/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="assets/nusacerdas-logo/icon-512.png">
+<link rel="apple-touch-icon" href="assets/nusacerdas-logo/apple-touch-icon.png">
+
+<link rel="stylesheet" href="styles.css" />
+	
+
+</head>
+<body class="category-page">
+
+<!-- ============ NAV ============ -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="site-logo" aria-label="NusaCerdas — beranda"><img src="assets/nusacerdas-logo/NC red white 250x150.webp" width="250" height="150" alt="NusaCerdas"></a>
+    <!-- <a href="#" class="nav-brand"><span class="dot"></span>NusaCerdas</a> -->
+    <div class="nav-links">
+      <a href="index.html#platform">Platform</a>
+      <div class="nav-item-dropdown" id="produkDropdown">
+        <a href="index.html#platform" id="produkTrigger" aria-haspopup="true" aria-controls="produkMenu" aria-expanded="false">
+          Produk
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+      </div>
+      <a href="index.html#trust">Untuk Sekolah</a>
+      <a href="index.html#testimonials">Mengapa NusaCerdas</a>
+    </div>
+    <div class="nav-actions">
+      <a href="#contact" class="nav-cta-mini">Hubungi Kami</a>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-controls="produkMenu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ MEGA-MENU (Produk dropdown) ============ -->
+<div class="mm-backdrop" id="mmBackdrop"></div>
+<div class="megamenu" id="produkMenu" aria-hidden="true">
+  <div class="megamenu-inner">
+
+    <!-- Link utama nav, hanya tampil di mobile (<= 880px) -->
+    <div class="mm-mobile-links">
+      <a href="index.html#platform">Platform</a>
+      <a href="index.html#trust">Untuk Sekolah</a>
+      <a href="index.html#testimonials">Mengapa NusaCerdas</a>
+    </div>
+
+    <!-- DASBOR KELAS -->
+    <div class="mm-col">
+      <a href="dasbor-kelas.html" class="mm-cat-header-link">
+        <div class="mm-cat-header">
+          <svg class="mm-cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span class="mm-cat-label">Dasbor Kelas</span>
+          <svg class="mm-cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+        <p class="mm-cat-sub">Pusat kendali kelas dalam satu layar</p>
+      </a>
+      <ul class="mm-product-list">
+        <li><a href="dasbor-kelas.html">NusaHome</a></li>
+        <li><a href="dasbor-kelas.html">NusaMessage</a></li>
+        <li><a href="dasbor-kelas.html">NusaAnalytic</a></li>
+        <li><a href="dasbor-kelas.html">NusaNote</a></li>
+      </ul>
+    </div>
+
+    <!-- LAB VIRTUAL -->
+    <div class="mm-col">
+      <a href="lab-virtual.html" aria-current="page" class="mm-cat-header-link">
+        <div class="mm-cat-header">
+          <svg class="mm-cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <span class="mm-cat-label">Lab Virtual</span>
+          <svg class="mm-cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+        <p class="mm-cat-sub">Simulasi 3D imersif untuk sains</p>
+      </a>
+      <ul class="mm-product-list">
+        <li><a href="#lab">NusaAnatomi</a></li>
+        <li><a href="#lab">NusaBiologi</a></li>
+        <li><a href="#lab">NusaAnimal</a></li>
+        <li><a href="#lab">NusaPlanet</a></li>
+        <li><a href="#lab">NusaPeriodik</a></li>
+        <li><a href="#lab">NusaChemical</a></li>
+        <li><a href="#lab">NusaPhysic</a></li>
+        <li><a href="#lab">NusaMath</a></li>
+      </ul>
+    </div>
+
+    <!-- PUSTAKA DIGITAL -->
+    <div class="mm-col">
+      <a href="pustaka-digital.html" class="mm-cat-header-link">
+        <div class="mm-cat-header">
+          <svg class="mm-cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <span class="mm-cat-label">Pustaka Digital</span>
+          <svg class="mm-cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+        <p class="mm-cat-sub">Buku + pendamping cerdas</p>
+      </a>
+      <ul class="mm-product-list">
+        <li><a href="pustaka-digital.html">NusaBook</a></li>
+        <li><a href="pustaka-digital.html">NusaHub <span class="mm-ai-badge">AI</span></a></li>
+        <li><a href="pustaka-digital.html">NusaNet</a></li>
+        <li><a href="pustaka-digital.html">NusaKids</a></li>
+        <li><a href="pustaka-digital.html">NusaMuslim</a></li>
+        <li><a href="pustaka-digital.html">NusaMap</a></li>
+      </ul>
+    </div>
+  
+ <!-- NUSAQUIZ -->
+    <div class="mm-col quiz-header">
+      <a href="nusaquiz.html" class="mm-cat-header-link-quiz">
+        <div class="mm-cat-header">
+          <svg class="mm-quiz-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span class="mm-cat-label">NusaQuiz</span><span class="mm-ai-badge">AI</span>
+          <!-- <svg class="mm-cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="currentcolor" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg> -->
+          <span class="mm-quiz-fav">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Favorit
+        </span>
+        </div>
+        <p class="mm-cat-sub">Kuis interaktif favorit siswa &amp; guru</p>
+      </a>
+       <div class="mm-quiz-demo">
+        <div class="mm-quiz-demo-top">
+          <span>PERTANYAAN 4/10</span>
+          <span class="mm-quiz-timer">
+            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span class="n">12</span>
+          </span>
+        </div>
+        <div class="mm-quiz-question">Apa ibu kota Provinsi Sumatera Barat?</div>
+        <div class="mm-quiz-opts">
+          <div class="mm-quiz-opt mm-q-red">▲ Medan</div>
+          <div class="mm-quiz-opt mm-q-blue">■ Padang</div>
+          <div class="mm-quiz-opt mm-q-yellow">● Pekanbaru</div>
+          <div class="mm-quiz-opt mm-q-green">◆ Jambi</div>
+        </div>
+      </div>
+      <ul class="mm-product-list">
+        <li><a href="nusaquiz.html">Kotak Poin</a></li>
+        <li><a href="nusaquiz.html">Kotak Misteri</a></li>
+        <li><a href="nusaquiz.html">Cepat Tepat</a></li>
+        <li><a href="nusaquiz.html">Pilihan Ganda</a></li>
+  
+      </ul>
+    </div>
+
+    <!-- NUSAQUIZ (featured red panel) -->
+    <!-- <div class="mm-quiz">
+      <div class="mm-quiz-header">
+        <svg class="mm-quiz-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span class="mm-quiz-label">NusaQuiz</span>
+        <span class="mm-quiz-fav">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Favorit
+        </span>
+      </div>
+      <p class="mm-quiz-sub">Kuis interaktif favorit siswa &amp; guru</p>
+
+      <div class="mm-quiz-demo">
+        <div class="mm-quiz-demo-top">
+          <span>PERTANYAAN 4/10</span>
+          <span class="mm-quiz-timer">
+            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span class="n">12</span>
+          </span>
+        </div>
+        <div class="mm-quiz-question">Apa ibu kota Provinsi Sumatera Barat?</div>
+        <div class="mm-quiz-opts">
+          <div class="mm-quiz-opt mm-q-red">▲ Medan</div>
+          <div class="mm-quiz-opt mm-q-blue">■ Padang</div>
+          <div class="mm-quiz-opt mm-q-yellow">● Pekanbaru</div>
+          <div class="mm-quiz-opt mm-q-green">◆ Jambi</div>
+        </div>
+      </div>
+
+      <ul class="mm-quiz-bullets">
+        <li>Bekerja tanpa internet</li>
+        <li>Soal dibuat instan dengan AI</li>
+        <li>Koreksi &amp; nilai otomatis</li>
+      </ul>
+
+      <a href="nusaquiz.html" class="mm-quiz-cta" id="mmQuizCta">
+        Lihat demo NusaQuiz
+        <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div> -->
+
+  </div>
+</div>
+
+<main id="main">
+
+<section class="dark-section" id="lab">
+  <div class="container">
+    <div class="page-breadcrumb" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="index.html">Beranda</a></li>
+        <li aria-current="page">Lab Virtual</li>
+      </ol>
+    </div>
+    <div class="sec-head">
+      <div class="sec-eyebrow">Lab Virtual</div>
+      <h1 class="sec-title display">Pembelajaran 3D <span class="gray">yang tidak bisa dilakukan buku teks.</span></h1>
+      <p class="sec-lede">Mengganti diagram datar dengan simulasi 3D imersif. Mengubah siswa pasif menjadi penjelajah aktif.</p>
+    </div>
+
+    <div class="product-grid stagger">
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openYTModal('dvS2j-BjIl0')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnatomy/Main Menu.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnatomy/Main%20Menu-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnatomy/Main%20Menu.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnatomi" /></div>
+        <div class="product-info"><span class="product-tag">Anatomi</span><h4>NusaAnatomy</h4><p>Eksplorasi mendalam tubuh manusia menggunakan model 3D interaktif yang detail.</p></div>
+      </div>
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openSubjectGallery('NusaBiology')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBiology/Bagian Daun.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaBiology/Bagian%20Daun-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaBiology/Bagian%20Daun.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaBiologi" /></div>
+        <div class="product-info"><span class="product-tag">Biologi</span><h4>NusaBiology</h4><p>Pembelajaran biologi imersif melalui visual 2D &amp; 3D tentang organisme dan konsep lab.</p></div>
+      </div>
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openYTModal('8gySOLSxBX0')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnimal/Pencernaan Harimau.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnimal/Pencernaan%20Harimau-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnimal/Pencernaan%20Harimau.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnimal" /></div>
+        <div class="product-info"><span class="product-tag">Zoologi</span><h4>NusaAnimal</h4><p>Pengalaman belajar hewan interaktif menggabungkan pengetahuan ilmiah dengan keanekaragaman hayati.</p></div>
+      </div>
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openYTModal('R8wJgMgrBqQ')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaPlanet/Main Menu.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaPlanet/Main%20Menu-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaPlanet/Main%20Menu.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaPlanet" /></div>
+        <div class="product-info"><span class="product-tag">Astronomi</span><h4>NusaPlanet</h4><p>Eksplorasi tata surya 3D interaktif dengan fenomena astronomi yang memukau.</p></div>
+      </div>
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openSubjectGallery('NusaPeriodic')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaPeriodic/Main Menu.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaPeriodic/Main%20Menu-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaPeriodic/Main%20Menu.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaPeriodic" /></div>
+        <div class="product-info"><span class="product-tag">Kimia</span><h4>NusaPeriodic</h4><p>Tabel periodik interaktif menghubungkan unsur kimia dengan produk dan aplikasi sehari-hari.</p></div>
+      </div>
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openSubjectGallery('NusaChem')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaChem/natrium.webp" width="1600" height="825" srcset="assets/NusaChem/natrium-640.webp 640w, assets/NusaChem/natrium.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaChemical" /></div>
+        <div class="product-info"><span class="product-tag">Kimia</span><h4>NusaChemical</h4><p>Eksperimen kimia virtual yang aman dengan reaksi interaktif dan modul lab siap pakai.</p></div>
+      </div>
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openSubjectGallery('NusaFisika')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaFisika/Optik 1.webp" width="1600" height="899" srcset="assets/NusaFisika/Optik%201-640.webp 640w, assets/NusaFisika/Optik%201.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaPhysic" /></div>
+        <div class="product-info"><span class="product-tag">Fisika</span><h4>NusaPhysic</h4><p>Laboratorium fisika virtual tak terbatas — mekanika, listrik, magnetisme, optik dalam simulasi presisi.</p></div>
+      </div>
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openSubjectGallery('NusaMath')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaMath/fungsi.webp" width="1280" height="759" srcset="assets/NusaMath/fungsi-640.webp 640w, assets/NusaMath/fungsi.webp 1280w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaMath" /></div>
+        <div class="product-info"><span class="product-tag">Matematika</span><h4>NusaMath</h4><p>Pembelajaran matematika interaktif dengan modul siap pakai dan visualisasi 3D real-time.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="fitur">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Modul Pembelajaran</div>
+      <h2 class="sec-title display">Dan masih banyak <span class="gray">lagi.</span></h2>
+      <p class="sec-lede">Ratusan modul pembelajaran yang mencakup semua mata pembelajaran.</p>
+    </div>
+
+    <div class="product-grid stagger">
+      <div class="product-card">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnatomy/Jantung.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnatomy/Jantung-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnatomy/Jantung.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnatomi" /></div>
+        <div class="product-info"><span class="product-tag">Modul Anatomi</span><h4>Kardiovaskular</h4><p>Materi peredaran darah & jantung.</p></div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnatomy/Kulit.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnatomy/Kulit-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnatomy/Kulit.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnatomi" /></div>
+        <div class="product-info"><span class="product-tag">Modul Anatomi</span><h4>In-Depth Breakdown</h4><p>Pembahasan mengenai bagian-bagian sel pada kulit.</p></div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnatomy/Kulit Rotate.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnatomy/Kulit%20Rotate-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnatomy/Kulit%20Rotate.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnatomi" /></div>
+        <div class="product-info"><span class="product-tag">Modul Anatomi</span><h4>X-ray Vision</h4><p>Bagian pada model 3D dapat ditampilkan secara x-ray.</p></div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBiology/Bakteri.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaBiology/Bakteri-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaBiology/Bakteri.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaBiologi" /></div>
+        <div class="product-info"><span class="product-tag">Modul Biologi</span><h4>Dunia Mikroskopik</h4><p>Pembahasan mendalam mengenai dunia mikroskopik seperti bakteri, sel, hingga struktur botani.</p></div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBiology/virus.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaBiology/virus-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaBiology/virus.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaBiologi" /></div>
+        <div class="product-info"><span class="product-tag">Modul Biologi</span><h4>Virus</h4><p>Pembelajaran seputar struktur sel virus.</p></div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBiology/X-ray Daun.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaBiology/X-ray%20Daun-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaBiology/X-ray%20Daun.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaBiologi" /></div>
+        <div class="product-info"><span class="product-tag">Modul Biologi</span><h4>3D Highlighting</h4><p>Model 3D terpisah berkualitas tinggi.</p></div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnimal/Domestik.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnimal/Domestik-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnimal/Domestik.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnimal" /></div>
+        <div class="product-info"><span class="product-tag">Modul Zoologi</span><h4>Ragam Habitat</h4><p>Eksplorasi anatomi hewan yang berbeda habitat.</p></div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnimal/Animasi.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnimal/Animasi-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnimal/Animasi.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnimal" /></div>
+        <div class="product-info"><span class="product-tag">Modul Zoologi</span><h4>Animasi Akurat</h4><p>Animasi yang secara akurat menggambarkan bagaimana hewan bergerak.</p></div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaPhysic/seriparalel no hud.webp" width="1600" height="873" srcset="assets/NusaSuites-%20Screenshot/NusaPhysic/seriparalel%20no%20hud-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaPhysic/seriparalel%20no%20hud.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaPhysic" /></div>
+        <div class="product-info"><span class="product-tag">Modul Fisika</span><h4>Real-time Experiment</h4><p>Eksperimen dengan efek yang langsung bisa diamati.</p></div>
+      </div>
+      <div class="product-card product-toggle">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaPhysic/ribuaninstrumenphysics.webp" width="1024" height="768" srcset="assets/NusaSuites-%20Screenshot/NusaPhysic/ribuaninstrumenphysics-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaPhysic/ribuaninstrumenphysics.webp 1024w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaPhysic" /></div>
+        <div class="product-info"><span class="product-tag">Modul Fisika</span><h4>Ratusan Instrument</h4><p>Ratusan peralatan yang dapat digunakan secara langsung tanpa batas.</p></div>
+      </div>
+      <div class="product-card product-toggle">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaChemical/Thermite no hud.webp" width="1600" height="873" srcset="assets/NusaSuites-%20Screenshot/NusaChemical/Thermite%20no%20hud-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaChemical/Thermite%20no%20hud.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnimal" /></div>
+        <div class="product-info"><span class="product-tag">Modul Kimia</span><h4>Tanpa Bahaya, Tanpa Biaya</h4><p>Lakukan eksperimen yang berbahaya sekalipun tanpa perlu takut resiko keselamatan dan biaya.</p></div>
+      </div>
+      <div class="product-card product-toggle">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaChemical/amanchemical.webp" width="1024" height="768" srcset="assets/NusaSuites-%20Screenshot/NusaChemical/amanchemical-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaChemical/amanchemical.webp 1024w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaChemical" /></div>
+        <div class="product-info"><span class="product-tag">Modul Kimia</span><h4>Eksperimen yang Akurat</h4><p>Tentukan unsur yang akan diuji dengan volume yang dapat disesuaikan.</p></div>
+      </div>
+      <!-- <div class="product-card product-toggle">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnimal/Ensiklopedia Harimau.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnimal/Ensiklopedia%20Harimau-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnimal/Ensiklopedia%20Harimau.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnimal" /></div>
+        <div class="product-info"><span class="product-tag">Modul Kimia</span><h4>Eksperimen yang Akurat</h4><p>Tentukan unsur yang akan diuji dengan volume yang dapat disesuaikan.</p></div>
+      </div> -->
+      
+      <div class="product-card selengkapnya-button" role="button" tabindex="0" aria-expanded="false">
+        <!-- <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnimal/Ensiklopedia Harimau.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnimal/Ensiklopedia%20Harimau-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnimal/Ensiklopedia%20Harimau.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnimal" /></div> -->
+        <div class="product-info-modified"><h4 id="see_more"><u>Lihat Selengkapnya ></u></h4><p id="see-more-p">Munculkan modul pembelajaran lainnya.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA (red) ============ -->
+<section class="cta" id="contact">
+  <div class="container">
+    <h2 class="display" style="color: var(--gray-50);">Siap membawa kelas Anda<br/>ke <span class="white-underline">level berikutnya?</span></h2>
+    <p>Jadwalkan demo eksekutif untuk sekolah atau yayasan Anda. Tim kami akan menyiapkan presentasi yang disesuaikan dengan konteks institusi.</p>
+    <div class="cta-row">
+      <a href="mailto:hello@nusacerdas.id" class="btn-primary">
+        Jadwalkan Demo
+        <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a href="tel:+622153665843" class="btn-secondary">Hubungi (021) 5366-5843</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="yt-modal-overlay" id="ytModalOverlay" role="dialog" aria-modal="true" aria-label="Video YouTube">
+  <div class="yt-modal-container" id="ytModalContainer">
+    <div class="yt-close-hint">Klik di luar video untuk menutup &nbsp;<kbd>ESC</kbd></div>
+    <button class="yt-btn-close-mobile" id="ytCloseMobile" aria-label="Tutup video">✕ &nbsp;Tutup</button>
+    <div class="yt-modal-video-wrap">
+      <iframe id="ytIframe" src="" title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Full Screen Popup Overlay Structure -->
+    <div id="galleryModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Galeri gambar" onclick="closeGalleryModal()">
+        <div class="gallery-container" onclick="event.stopPropagation()">
+            
+            <button class="close-btn" aria-label="Tutup galeri" onclick="closeGalleryModal()">&times;</button>
+            
+            <!-- Left Side: Main Iframe View Area -->
+            <div class="viewer-wrapper">
+                <button id="prevBtn" class="nav-arrow prev-arrow" aria-label="Gambar sebelumnya" onclick="navigateGallery(-1)">&#10094;</button>
+                <button id="nextBtn" class="nav-arrow next-arrow" aria-label="Gambar berikutnya" onclick="navigateGallery(1)">&#10095;</button>
+                <img id="galleryFrame" class="gallery-viewer" src="" alt="Tampilan gambar galeri">
+            </div>
+
+            <!-- Right Side Sidebar: Built dynamically based on config number -->
+            <div class="gallery-grid" id="thumbnailGrid"></div>
+
+        </div>
+    </div>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><span class="dot"></span>nusa.cerdas</div>
+        <p style="max-width: 320px;">Sistem operasi ruang kelas Indonesia. Offline-first, kurikulum-terpadu, dibangun untuk realitas pendidikan Indonesia.</p>
+        <p style="margin-top: 16px; color: rgba(255,255,255,0.4); font-size: 13px;">Kebon Jeruk, Jakarta Barat 11550<br/>hello@nusacerdas.id · (021) 5366-5843</p>
+      </div>
+      <div>
+        <h5>Platform</h5>
+        <ul>
+          <li><a href="index.html#platform">NusaCerdasOS</a></li>
+          <li><a href="dasbor-kelas.html">Dasbor Kelas</a></li>
+          <li><a href="lab-virtual.html" aria-current="page">Lab Virtual</a></li>
+          <li><a href="pustaka-digital.html">Pustaka Digital</a></li>
+          <li><a href="nusaquiz.html">NusaQuiz</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Produk</h5>
+        <ul>
+          <li><a href="dasbor-kelas.html">NusaHome</a></li>
+          <li><a href="dasbor-kelas.html">NusaAnalytic</a></li>
+          <li><a href="#lab">NusaAnatomi</a></li>
+          <li><a href="#lab">NusaMath</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Perusahaan</h5>
+        <ul>
+          <li><a href="index.html#trust">Mengapa Kami</a></li>
+          <li><a href="index.html#testimonials">Testimoni</a></li>
+          <li><a href="#contact">Hubungi Kami</a></li>
+          <li><a href="mailto:hello@nusacerdas.id?subject=Karir%20di%20NusaCerdas">Karir</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>&copy; 2026 NusaCerdas. SmartClass&trade; adalah merek dagang terdaftar.</div>
+      <div class="footer-tagline">Cerdas Mengajar. Cerdas Belajar.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+
+</body>
+</html>

@@ -2,6 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
+<script>document.documentElement.classList.add('js')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>NusaCerdas — Software Papan Interaktif &amp; Smart Classroom untuk Sekolah</title>
 <meta name="description" content="Sistem Operasi Ruang Kelas Indonesia. Infrastruktur perangkat lunak untuk Papan Interaktif. Offline-first. TKDN 94%. Terbukti sejak 2019." />
@@ -71,60 +72,14 @@
 
 <link rel="stylesheet" href="styles.css" />
 	
-	<style>
-        
-        /* Fullscreen Modal Backdrop */
-        .modal-backdrop { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); justify-content: center; align-items: center; z-index: 1000; }
-        
-        /* Two-Column Layout Container - Always Row on Desktop */
-        .gallery-container { display: flex; flex-direction: row; gap: 15px; width: 90%; max-width: 1100px; position: relative; background-color: #1a1a1a; padding: 20px; border-radius: 8px; border: 1px solid #333; }
 
-        /* Left Side: View Wrapper for Iframe and Overlay Controls */
-        .viewer-wrapper { flex: 4; position: relative; display: flex; flex-direction: column; min-width: 0; }
-        .gallery-viewer { width: 100%; height: 500px; border: 1px solid #444; border-radius: 6px; background-color: #000; object-fit: contain; }
-
-        /* Navigation Floating Arrow Overlay Buttons */
-        .nav-arrow { position: absolute; top: calc(50% - 25px); width: 50px; height: 50px; background: rgba(0, 0, 0, 0.6); border: 1px solid #555; color: white; border-radius: 50%; cursor: pointer; font-size: 24px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; user-select: none; z-index: 10; opacity: 0; visibility: hidden; }
-        .nav-arrow:hover { background: #007bff; border-color: #007bff; transform: scale(1.1); }
-        .prev-arrow { left: 15px; }
-        .next-arrow { right: 15px; }
-        .viewer-wrapper:hover .nav-arrow { opacity: 1; visibility: visible; }
-		nav { background: #c8c8c8; }
-		nav.scrolled { background: #c8c8c8; }
-        
-        /* Right Side Sidebar Grid Container */
-        .gallery-grid { flex: 1; display: grid; grid-template-columns: 1fr; grid-auto-rows: 75px; gap: 10px; max-height: 500px; overflow-y: auto; padding-right: 5px; align-content: start; }
-        .gallery-grid::-webkit-scrollbar { width: 6px; }
-        .gallery-grid::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
-
-        /* Clickable thumbnail items */
-        .thumb-btn { background: none; border: 2px solid transparent; padding: 0; cursor: pointer; border-radius: 6px; overflow: hidden; height: 100%; transition: all 0.2s; }
-        .thumb-btn:hover { border-color: #555; }
-        .thumb-btn img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-        /* Active Thumbnail State */
-        .thumb-btn.active { border-color: #007bff; box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); }
-
-        /* Close Button Cross Symbol */
-        .close-btn { position: absolute; top: -45px; right: 0; font-size: 35px; color: white; cursor: pointer; background: none; border: none; }
-        .close-btn:hover { color: #bbb; }
-
-        /* Responsive Mobile Layout Rules (< 768px) */
-        @media (max-width: 768px) {
-            .gallery-container { flex-direction: column; width: 95%; max-height: 95vh; overflow-y: auto; padding: 15px; margin-top: 40px; }
-            .gallery-viewer { height: 300px; }
-            .nav-arrow { top: calc(50% - 20px); width: 40px; height: 40px; font-size: 18px; opacity: 1; visibility: visible; }
-            .gallery-grid { grid-template-columns: repeat(4, 1fr); grid-auto-rows: 60px; max-height: none; overflow-y: visible; padding-right: 0; margin-top: 15px; }
-            .close-btn { top: -40px; right: 10px; }
-        }
-    </style>
 </head>
 <body>
 
 <!-- ============ NAV ============ -->
-<nav>
+<nav class="site-nav">
   <div class="nav-inner">
-    <img src="assets/nusacerdas-logo/NC red white 250x150.webp" alt="NusaCerdas" style="width: 10%;">
+    <a href="#main" class="site-logo" aria-label="NusaCerdas — ke atas halaman"><img src="assets/nusacerdas-logo/NC red white 250x150.webp" width="250" height="150" alt="NusaCerdas"></a>
     <!-- <a href="#" class="nav-brand"><span class="dot"></span>NusaCerdas</a> -->
     <div class="nav-links">
       <a href="#platform">Platform</a>
@@ -137,18 +92,30 @@
       <a href="#trust">Untuk Sekolah</a>
       <a href="#testimonials">Mengapa NusaCerdas</a>
     </div>
-    <a href="#contact" class="nav-cta-mini">Hubungi Kami</a>
+    <div class="nav-actions">
+      <a href="#contact" class="nav-cta-mini">Hubungi Kami</a>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-controls="produkMenu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </nav>
 
 <!-- ============ MEGA-MENU (Produk dropdown) ============ -->
 <div class="mm-backdrop" id="mmBackdrop"></div>
-<div class="megamenu" id="produkMenu" role="menu" aria-hidden="true">
+<div class="megamenu" id="produkMenu" aria-hidden="true">
   <div class="megamenu-inner">
+
+    <!-- Link utama nav, hanya tampil di mobile (<= 880px) -->
+    <div class="mm-mobile-links">
+      <a href="#platform">Platform</a>
+      <a href="#trust">Untuk Sekolah</a>
+      <a href="#testimonials">Mengapa NusaCerdas</a>
+    </div>
 
     <!-- DASBOR KELAS -->
     <div class="mm-col">
-      <a href="#hub" class="mm-cat-header-link">
+      <a href="dasbor-kelas.html" class="mm-cat-header-link">
         <div class="mm-cat-header">
           <svg class="mm-cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
           <span class="mm-cat-label">Dasbor Kelas</span>
@@ -166,7 +133,7 @@
 
     <!-- LAB VIRTUAL -->
     <div class="mm-col">
-      <a href="#lab" class="mm-cat-header-link">
+      <a href="lab-virtual.html" class="mm-cat-header-link">
         <div class="mm-cat-header">
           <svg class="mm-cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
           <span class="mm-cat-label">Lab Virtual</span>
@@ -188,7 +155,7 @@
 
     <!-- PUSTAKA DIGITAL -->
     <div class="mm-col">
-      <a href="#lokal" class="mm-cat-header-link">
+      <a href="pustaka-digital.html" class="mm-cat-header-link">
         <div class="mm-cat-header">
           <svg class="mm-cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
           <span class="mm-cat-label">Pustaka Digital</span>
@@ -208,17 +175,17 @@
   
  <!-- NUSAQUIZ -->
     <div class="mm-col quiz-header">
-      <a href="#nusaquiz" class="mm-cat-header-link-quiz">
+      <a href="nusaquiz.html" class="mm-cat-header-link-quiz">
         <div class="mm-cat-header">
           <svg class="mm-quiz-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          <span class="mm-cat-label" style="color:white !important;">NusaQuiz</span><span class="mm-ai-badge">AI</span>
+          <span class="mm-cat-label">NusaQuiz</span><span class="mm-ai-badge">AI</span>
           <!-- <svg class="mm-cat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="currentcolor" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg> -->
           <span class="mm-quiz-fav">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           Favorit
-        </span>x
+        </span>
         </div>
-        <p class="mm-cat-sub"  style="color:rgb(217, 217, 217) !important;">Kuis interaktif favorit siswa &amp; guru</p>
+        <p class="mm-cat-sub">Kuis interaktif favorit siswa &amp; guru</p>
       </a>
        <div class="mm-quiz-demo">
         <div class="mm-quiz-demo-top">
@@ -237,10 +204,10 @@
         </div>
       </div>
       <ul class="mm-product-list">
-        <li><a href="#lokal"  style="color:white !important;">Kotak Poin</a></li>
-        <li><a href="#lokal"  style="color:white !important;">Kotak Misteri</a></li>
-        <li><a href="#lokal"  style="color:white !important;">Cepat Tepat</a></li>
-        <li><a href="#lokal"  style="color:white !important;">Pilihan Ganda</a></li>
+        <li><a href="#nusaquiz">Kotak Poin</a></li>
+        <li><a href="#nusaquiz">Kotak Misteri</a></li>
+        <li><a href="#nusaquiz">Cepat Tepat</a></li>
+        <li><a href="#nusaquiz">Pilihan Ganda</a></li>
   
       </ul>
     </div>
@@ -313,17 +280,17 @@
 
       <div class="hero-visual">
         <div class="hero-visual-img">
-          <div class="hero-slide active"><img fetchpriority="high" decoding="async" src="assets/hero-picture-1.webp" alt="NusaCerdas SmartClass 1" /></div>
-          <div class="hero-slide"><img loading="lazy" decoding="async" src="assets/hero-picture-2.webp" alt="NusaCerdas SmartClass 2" /></div>
-          <div class="hero-slide"><img loading="lazy" decoding="async" src="assets/hero-picture-3.webp" alt="NusaCerdas SmartClass 3" /></div>
-          <div class="hero-slide"><img loading="lazy" decoding="async" src="assets/hero-picture-4.webp" alt="NusaCerdas SmartClass 4" /></div>
+          <div class="hero-slide active"><img fetchpriority="high" decoding="async" src="assets/hero-picture-1.webp" width="1023" height="1537" srcset="assets/hero-picture-1-640.webp 640w, assets/hero-picture-1.webp 1023w" sizes="(max-width: 980px) min(480px, 100vw), 540px" alt="NusaCerdas SmartClass 1" /></div>
+          <div class="hero-slide"><img loading="lazy" decoding="async" src="assets/hero-picture-2.webp" width="1055" height="1491" srcset="assets/hero-picture-2-640.webp 640w, assets/hero-picture-2.webp 1055w" sizes="(max-width: 980px) min(480px, 100vw), 540px" alt="NusaCerdas SmartClass 2" /></div>
+          <div class="hero-slide"><img loading="lazy" decoding="async" src="assets/hero-picture-3.webp" width="1122" height="1402" srcset="assets/hero-picture-3-640.webp 640w, assets/hero-picture-3.webp 1122w" sizes="(max-width: 980px) min(480px, 100vw), 540px" alt="NusaCerdas SmartClass 3" /></div>
+          <div class="hero-slide"><img loading="lazy" decoding="async" src="assets/hero-picture-4.webp" width="1024" height="1535" srcset="assets/hero-picture-4-640.webp 640w, assets/hero-picture-4.webp 1024w" sizes="(max-width: 980px) min(480px, 100vw), 540px" alt="NusaCerdas SmartClass 4" /></div>
           <button class="hero-slider-btn hero-slider-prev" aria-label="Sebelumnya">&#8249;</button>
           <button class="hero-slider-btn hero-slider-next" aria-label="Berikutnya">&#8250;</button>
           <div class="hero-slider-dots">
-            <span class="hero-dot active"></span>
-            <span class="hero-dot"></span>
-            <span class="hero-dot"></span>
-            <span class="hero-dot"></span>
+            <button type="button" class="hero-dot active" aria-label="Tampilkan foto 1" aria-current="true"></button>
+            <button type="button" class="hero-dot" aria-label="Tampilkan foto 2" aria-current="false"></button>
+            <button type="button" class="hero-dot" aria-label="Tampilkan foto 3" aria-current="false"></button>
+            <button type="button" class="hero-dot" aria-label="Tampilkan foto 4" aria-current="false"></button>
           </div>
         </div>
         <div class="hero-float-card">
@@ -549,16 +516,16 @@
     <div class="product-reveal-canvas">
       <!-- Four "frames" cross-fade like a pre-rendered sequence -->
       <div class="device-frame" data-frame="0">
-        <img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/nusahome-class.webp" alt="NusaHome dashboard" />
+        <img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/nusahome-class.webp" width="1600" height="900" alt="NusaHome dashboard" />
       </div>
       <div class="device-frame" data-frame="1">
-        <img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHub/Halaman Utama.webp" alt="NusaHub platform" />
+        <img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHub/Halaman Utama.webp" width="1600" height="900" alt="NusaHub platform" />
       </div>
       <div class="device-frame" data-frame="2">
-        <img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBiology/nusabiology-class.webp" alt="3D Anatomi" />
+        <img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBiology/nusabiology-class.webp" width="1600" height="900" alt="3D Anatomi" />
       </div>
       <div class="device-frame" data-frame="3">
-        <img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnalytic/analytic.webp" alt="Real-time analytics" />
+        <img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnalytic/analytic.webp" width="1600" height="899" alt="Real-time analytics" />
       </div>
     </div>
 
@@ -583,15 +550,6 @@
   </div>
 </section>
 
-      <!-- <div class="pinned-image-stack">
-        <img loading="lazy" decoding="async" src="assets/embedded/nusahome.webp" alt="NusaHome" class="active" data-slide="0" />
-        <img loading="lazy" decoding="async" src="assets/embedded/pembelajaran-offline.webp" alt="Pembelajaran offline" data-slide="1" />
-        <img loading="lazy" decoding="async" src="assets/embedded/3d-anatomi.webp" alt="3D Anatomi" data-slide="2" />
-      </div> -->
-    </div>
-  </div>
-</div>
-
 <!-- ============ THE HUB (Dasbor Kelas) ============ -->
 <section id="hub">
 <div class="container">
@@ -604,7 +562,7 @@
     <div class="product-grid stagger">
         
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/Tampilan Awal.webp" alt="NusaHome" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/Tampilan Awal.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaHome/Tampilan%20Awal-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaHome/Tampilan%20Awal.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaHome" /></div>
         <div class="product-info">
           <span class="product-tag">Dashboard</span>
           <h4>NusaHome</h4>
@@ -613,7 +571,7 @@
       </div>
    
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/angkaacakZoomed.webp" alt="NusaHome" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/angkaacakZoomed.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaHome/angkaacakZoomed-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaHome/angkaacakZoomed.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaHome" /></div>
         <div class="product-info">
           <span class="product-tag">Fitur</span>
           <h4>NusaAcak</h4>
@@ -621,7 +579,7 @@
         </div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/polling.webp" alt="polling" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/polling.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaHome/polling-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaHome/polling.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="polling" /></div>
         <div class="product-info">
           <span class="product-tag">Fitur</span>
           <h4>NusaVote</h4>
@@ -630,7 +588,7 @@
       </div>
   
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/Stopwatch & Timer.webp" alt="Stopwatch" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/Stopwatch & Timer.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaHome/Stopwatch%20%26%20Timer-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaHome/Stopwatch%20%26%20Timer.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="Stopwatch" /></div>
         <div class="product-info">
           <span class="product-tag">Fitur</span>
           <h4>NusaTimer</h4>
@@ -638,7 +596,7 @@
         </div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/Lagu.webp" alt="Lagu" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/Lagu.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaHome/Lagu-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaHome/Lagu.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="Lagu" /></div>
         <div class="product-info">
           <span class="product-tag">Fitur</span>
           <h4>NusaLagu</h4>
@@ -646,7 +604,7 @@
         </div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/speedtest.webp" alt="Speedtest" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/speedtest.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaHome/speedtest-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaHome/speedtest.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="Speedtest" /></div>
         <div class="product-info">
           <span class="product-tag">Fitur</span>
           <h4>NusaPing</h4>
@@ -654,7 +612,7 @@
         </div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/dynamicwallpaper.webp" alt="Wallpaper" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/dynamicwallpaper.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaHome/dynamicwallpaper-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaHome/dynamicwallpaper.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="Wallpaper" /></div>
         <div class="product-info">
           <span class="product-tag">Fitur</span>
           <h4>NusaScene</h4>
@@ -662,7 +620,7 @@
         </div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/nusamessage.webp" alt="NusaMessage" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/nusamessage.webp" width="1335" height="751" srcset="assets/NusaSuites-%20Screenshot/NusaHome/nusamessage-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaHome/nusamessage.webp 1335w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaMessage" /></div>
         <div class="product-info">
           <span class="product-tag">Komunikasi</span>
           <h4>NusaMessage</h4>
@@ -670,7 +628,7 @@
         </div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnalytic/analytic.webp" alt="NusaAnalytic" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnalytic/analytic.webp" width="1600" height="899" srcset="assets/NusaSuites-%20Screenshot/NusaAnalytic/analytic-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnalytic/analytic.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnalytic" /></div>
         <div class="product-info">
           <span class="product-tag">Analitik</span>
           <h4>NusaAnalytic</h4>
@@ -678,7 +636,7 @@
         </div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaNote/Atur Pena.webp" alt="NusaNote" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaNote/Atur Pena.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaNote/Atur%20Pena-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaNote/Atur%20Pena.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaNote" /></div>
         <div class="product-info">
           <span class="product-tag">Produktivitas</span>
           <h4>NusaNote</h4>
@@ -699,36 +657,36 @@
     </div>
 
     <div class="product-grid stagger">
-      <div class="product-card" onclick="openYTModal('dvS2j-BjIl0')">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnatomy/Main Menu.webp" alt="NusaAnatomi" /></div>
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openYTModal('dvS2j-BjIl0')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnatomy/Main Menu.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnatomy/Main%20Menu-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnatomy/Main%20Menu.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnatomi" /></div>
         <div class="product-info"><span class="product-tag">Anatomi</span><h4>NusaAnatomy</h4><p>Eksplorasi mendalam tubuh manusia menggunakan model 3D interaktif yang detail.</p></div>
       </div>
-      <div class="product-card" onclick="openSubjectGallery('NusaBiology')">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBiology/Bagian Daun.webp" alt="NusaBiologi" /></div>
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openSubjectGallery('NusaBiology')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBiology/Bagian Daun.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaBiology/Bagian%20Daun-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaBiology/Bagian%20Daun.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaBiologi" /></div>
         <div class="product-info"><span class="product-tag">Biologi</span><h4>NusaBiology</h4><p>Pembelajaran biologi imersif melalui visual 2D &amp; 3D tentang organisme dan konsep lab.</p></div>
       </div>
-      <div class="product-card" onclick="openYTModal('8gySOLSxBX0')">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnimal/Pencernaan Harimau.webp" alt="NusaAnimal" /></div>
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openYTModal('8gySOLSxBX0')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnimal/Pencernaan Harimau.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnimal/Pencernaan%20Harimau-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnimal/Pencernaan%20Harimau.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnimal" /></div>
         <div class="product-info"><span class="product-tag">Zoologi</span><h4>NusaAnimal</h4><p>Pengalaman belajar hewan interaktif menggabungkan pengetahuan ilmiah dengan keanekaragaman hayati.</p></div>
       </div>
-      <div class="product-card" onclick="openYTModal('R8wJgMgrBqQ')">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaPlanet/Main Menu.webp" alt="NusaPlanet" /></div>
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openYTModal('R8wJgMgrBqQ')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaPlanet/Main Menu.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaPlanet/Main%20Menu-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaPlanet/Main%20Menu.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaPlanet" /></div>
         <div class="product-info"><span class="product-tag">Astronomi</span><h4>NusaPlanet</h4><p>Eksplorasi tata surya 3D interaktif dengan fenomena astronomi yang memukau.</p></div>
       </div>
-      <div class="product-card" onclick="openSubjectGallery('NusaPeriodic')">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaPeriodic/Main Menu.webp" alt="NusaPeriodic" /></div>
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openSubjectGallery('NusaPeriodic')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaPeriodic/Main Menu.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaPeriodic/Main%20Menu-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaPeriodic/Main%20Menu.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaPeriodic" /></div>
         <div class="product-info"><span class="product-tag">Kimia</span><h4>NusaPeriodic</h4><p>Tabel periodik interaktif menghubungkan unsur kimia dengan produk dan aplikasi sehari-hari.</p></div>
       </div>
-      <div class="product-card" onclick="openSubjectGallery('NusaChem')">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaChem/natrium.webp" alt="NusaChemical" /></div>
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openSubjectGallery('NusaChem')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaChem/natrium.webp" width="1600" height="825" srcset="assets/NusaChem/natrium-640.webp 640w, assets/NusaChem/natrium.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaChemical" /></div>
         <div class="product-info"><span class="product-tag">Kimia</span><h4>NusaChemical</h4><p>Eksperimen kimia virtual yang aman dengan reaksi interaktif dan modul lab siap pakai.</p></div>
       </div>
-      <div class="product-card" onclick="openSubjectGallery('NusaFisika')">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaFisika/Optik 1.webp" alt="NusaPhysic" /></div>
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openSubjectGallery('NusaFisika')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaFisika/Optik 1.webp" width="1600" height="899" srcset="assets/NusaFisika/Optik%201-640.webp 640w, assets/NusaFisika/Optik%201.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaPhysic" /></div>
         <div class="product-info"><span class="product-tag">Fisika</span><h4>NusaPhysic</h4><p>Laboratorium fisika virtual tak terbatas — mekanika, listrik, magnetisme, optik dalam simulasi presisi.</p></div>
       </div>
-      <div class="product-card" onclick="openSubjectGallery('NusaMath')">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaMath/fungsi.webp" alt="NusaMath" /></div>
+      <div class="product-card" role="button" tabindex="0" aria-haspopup="dialog" onclick="openSubjectGallery('NusaMath')">
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaMath/fungsi.webp" width="1280" height="759" srcset="assets/NusaMath/fungsi-640.webp 640w, assets/NusaMath/fungsi.webp 1280w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaMath" /></div>
         <div class="product-info"><span class="product-tag">Matematika</span><h4>NusaMath</h4><p>Pembelajaran matematika interaktif dengan modul siap pakai dan visualisasi 3D real-time.</p></div>
       </div>
     </div>
@@ -746,27 +704,27 @@
 
     <div class="product-grid stagger">
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBook/utamaedited.webp" alt="NusaBook" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBook/utamaedited.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaBook/utamaedited-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaBook/utamaedited.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaBook" /></div>
         <div class="product-info"><span class="product-tag">Kurikulum</span><h4>NusaBook</h4><p>Database masif buku teks offline untuk semua tingkatan — SD hingga SMK, tanpa internet.</p></div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHub/NusaHubMain.webp" alt="NusaHub" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHub/NusaHubMain.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaHub/NusaHubMain-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaHub/NusaHubMain.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaHub" /></div>
         <div class="product-info"><span class="product-tag">Platform AI</span><h4>NusaHub <span style="background:var(--red); color:white; padding:2px 7px; border-radius:4px; font-size:10px; font-weight:700; letter-spacing:0.04em; margin-left:6px; vertical-align:middle;">AI</span></h4><p>Platform terpusat untuk mengintegrasikan semua aplikasi pembelajaran dan selaras dengan metode pengajaran guru.</p></div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaKids/Main Menu.webp" alt="NusaKids" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaKids/Main Menu.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaKids/Main%20Menu-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaKids/Main%20Menu.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaKids" /></div>
         <div class="product-info"><span class="product-tag">PAUD</span><h4>NusaKids</h4><p>Permainan pembelajaran kreatif yang memadukan budaya, seni, dan pendidikan dasar untuk anak usia dini.</p></div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaMuslim/Zakat Fitrah edited.webp" alt="NusaMuslim" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaMuslim/Zakat Fitrah edited.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaMuslim/Zakat%20Fitrah%20edited-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaMuslim/Zakat%20Fitrah%20edited.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaMuslim" /></div>
         <div class="product-info"><span class="product-tag">Madrasah</span><h4>NusaMuslim</h4><p>Paket edukasi Islam dengan Iqro interaktif, animasi kisah Nabi, dan panduan sholat sempurna.</p></div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaMap/Main Menu.webp" alt="NusaMap" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaMap/Main Menu.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaMap/Main%20Menu-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaMap/Main%20Menu.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaMap" /></div>
         <div class="product-info"><span class="product-tag">Geografi</span><h4>NusaMap</h4><p>Eksplorasi dunia 3D interaktif dengan landmark negara, wawasan budaya, dan mata uang.</p></div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/embedded/nusanet.webp" alt="NusaNet" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/embedded/nusanet.webp" width="209" height="153" alt="NusaNet" /></div>
         <div class="product-info"><span class="product-tag">Jaringan</span><h4>NusaNet</h4><p>Pustaka jaringan berbasis intranet untuk konektivitas multi-perangkat tanpa akses internet.</p></div>
       </div>
     </div>
@@ -785,11 +743,11 @@
     <div class="quiz-showcase">
       <!-- Mockup with floating badges -->
       <div class="quiz-mockup">
-        <div class="quiz-mockup-inner" style="position: relative; height: 350px; width: 700px;">
-          <img loading="lazy" decoding="async" class="active" id="image-quiz-1" src="assets/2devicecpt.webp" alt="Tampilan NusaQuiz di papan interaktif" />
-          <img loading="lazy" decoding="async" id="image-quiz-2" src="assets/2devicepilgan.webp" alt="Tampilan NusaQuiz di papan interaktif" />
-          <img loading="lazy" decoding="async" id="image-quiz-3" src="assets/kotakpoin.webp" alt="Tampilan NusaQuiz di papan interaktif" />
-          <!-- <img loading="lazy" decoding="async" id="image-quiz-4" src="assets/NusaSuites- Screenshot/NusaAnatomy/Main Menu.webp" alt="Tampilan NusaQuiz di papan interaktif" /> -->
+        <div class="quiz-mockup-inner">
+          <img loading="lazy" decoding="async" class="active" id="image-quiz-1" src="assets/2devicecpt.webp" width="1600" height="900" alt="Tampilan NusaQuiz di papan interaktif" />
+          <img loading="lazy" decoding="async" id="image-quiz-2" src="assets/2devicepilgan.webp" width="1600" height="900" alt="Tampilan NusaQuiz di papan interaktif" />
+          <img loading="lazy" decoding="async" id="image-quiz-3" src="assets/kotakpoin.webp" width="1600" height="900" alt="Tampilan NusaQuiz di papan interaktif" />
+          <!-- <img loading="lazy" decoding="async" id="image-quiz-4" src="assets/NusaSuites- Screenshot/NusaAnatomy/Main Menu.webp" width="1600" height="900" alt="Tampilan NusaQuiz di papan interaktif" /> -->
         </div>
         <!-- <div class="quiz-badge b1">
           <span class="quiz-badge-emoji">
@@ -810,10 +768,10 @@
           +100 Skor
         </div> -->
         <div class="button-quiz">
-          <div id="quiz-option-1" class="quiz-option"><img loading="lazy" decoding="async" class="quiz-button-img" src="assets/cepat-tepat.webp" alt="" srcset=""></div>
-          <div id="quiz-option-2" class="quiz-option"><img loading="lazy" decoding="async" class="quiz-button-img" src="assets/pilihan-ganda.webp" alt="" srcset=""></div>
-          <div id="quiz-option-3" class="quiz-option"><img loading="lazy" decoding="async" class="quiz-button-img" src="assets/kotak-misteri.webp" alt="" srcset=""></div>
-          <!-- <div id="quiz-option-4" class="quiz-option"><img loading="lazy" decoding="async" class="quiz-button-img" src="assets/kotak-misteri.webp" alt="" srcset=""></div> -->
+          <div id="quiz-option-1" class="quiz-option" role="button" tabindex="0" aria-pressed="true"><img loading="lazy" decoding="async" class="quiz-button-img" src="assets/cepat-tepat.webp" width="1500" height="1500" alt="Cepat Tepat"></div>
+          <div id="quiz-option-2" class="quiz-option" role="button" tabindex="0" aria-pressed="false"><img loading="lazy" decoding="async" class="quiz-button-img" src="assets/pilihan-ganda.webp" width="1500" height="1500" alt="Pilihan Ganda"></div>
+          <div id="quiz-option-3" class="quiz-option" role="button" tabindex="0" aria-pressed="false"><img loading="lazy" decoding="async" class="quiz-button-img" src="assets/kotak-misteri.webp" width="1500" height="1500" alt="Kotak Misteri"></div>
+          <!-- <div id="quiz-option-4" class="quiz-option"><img loading="lazy" decoding="async" class="quiz-button-img" src="assets/kotak-misteri.webp" width="1500" height="1500" alt="" srcset=""></div> -->
         </div>
       </div>
 
@@ -997,71 +955,7 @@
 </section>
 
 
-<!-- ============ HORIZONTAL SCROLL SHOWCASE (Feature 4: Pinned horizontal narrative) ============ -->
-<!-- <section class="horizontal-pin scene" id="cinematic-showcase" data-scene="horizontal">
-  <div class="horizontal-pin-stage">
-    <div class="horizontal-pin-title">
-      <div class="sec-eyebrow">Galeri Produk</div>
-      <h2 class="display">Geser. Jelajahi. <span style="color:var(--red);">Pilih.</span></h2>
-    </div>
 
-    <div class="horizontal-track">
-      <article class="horizontal-card">
-        <div class="horizontal-card-img"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaHome/Tampilan Awal.webp" alt="NusaHome" /></div>
-        <div class="horizontal-card-content">
-          <div class="step">01 / 06 · DASHBOARD</div>
-          <h3>NusaHome</h3>
-          <p>Dasbor cerdas dengan lagu kebangsaan, pengatur waktu kelas, dan pesan resmi pemerintah — pintu masuk yang menyatukan seluruh ekosistem.</p>
-        </div>
-      </article>
-
-      <article class="horizontal-card">
-        <div class="horizontal-card-img"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnatomy/Main Menu.webp" alt="NusaAnatomi" /></div>
-        <div class="horizontal-card-content">
-          <div class="step">02 / 06 · LAB VIRTUAL</div>
-          <h3>NusaAnatomi</h3>
-          <p>Tubuh manusia dalam 3D interaktif. Siswa dapat memutar, membongkar, dan menjelajahi sistem organ secara langsung di papan interaktif.</p>
-        </div>
-      </article>
-
-      <article class="horizontal-card">
-        <div class="horizontal-card-img"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaChemical/Thermite no hud.webp" alt="NusaChemical" /></div>
-        <div class="horizontal-card-content">
-          <div class="step">03 / 06 · LAB VIRTUAL</div>
-          <h3>NusaChemical</h3>
-          <p>Eksperimen kimia virtual yang sepenuhnya aman. Reaksi yang sulit atau berbahaya kini dapat dilakukan setiap hari, di setiap sekolah.</p>
-        </div>
-      </article>
-
-      <article class="horizontal-card">
-        <div class="horizontal-card-img"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaPlanet/Main Menu.webp" alt="NusaPlanet" /></div>
-        <div class="horizontal-card-content">
-          <div class="step">04 / 06 · LAB VIRTUAL</div>
-          <h3>NusaPlanet</h3>
-          <p>Tata surya 3D yang dapat dijelajahi. Dari skala atom hingga galaksi — astronomi tidak pernah sehidup ini.</p>
-        </div>
-      </article>
-
-      <article class="horizontal-card">
-        <div class="horizontal-card-img"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaMath/NusaMath.webp" alt="NusaMath" /></div>
-        <div class="horizontal-card-content">
-          <div class="step">05 / 06 · KURIKULUM</div>
-          <h3>NusaMath</h3>
-          <p>Visualisasi matematika real-time. Bangun ruang dapat dimanipulasi langsung — geometri yang dapat disentuh oleh setiap siswa.</p>
-        </div>
-      </article>
-
-      <article class="horizontal-card">
-        <div class="horizontal-card-img"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnalytic/analytic.webp" alt="NusaAnalytic" /></div>
-        <div class="horizontal-card-content">
-          <div class="step">06 / 06 · ANALITIK</div>
-          <h3>NusaAnalytic</h3>
-          <p>Wawasan real-time untuk kepala sekolah. Lihat pola penggunaan, progres pembelajaran, dan optimalkan ekosistem sekolah dari satu layar.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section> -->
 
 <section id="fitur">
   <div class="container">
@@ -1073,60 +967,60 @@
 
     <div class="product-grid stagger">
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnatomy/Jantung.webp" alt="NusaAnatomi" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnatomy/Jantung.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnatomy/Jantung-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnatomy/Jantung.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnatomi" /></div>
         <div class="product-info"><span class="product-tag">Modul Anatomi</span><h4>Kardiovaskular</h4><p>Materi peredaran darah & jantung.</p></div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnatomy/Kulit.webp" alt="NusaAnatomi" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnatomy/Kulit.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnatomy/Kulit-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnatomy/Kulit.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnatomi" /></div>
         <div class="product-info"><span class="product-tag">Modul Anatomi</span><h4>In-Depth Breakdown</h4><p>Pembahasan mengenai bagian-bagian sel pada kulit.</p></div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnatomy/Kulit Rotate.webp" alt="NusaAnatomi" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnatomy/Kulit Rotate.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnatomy/Kulit%20Rotate-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnatomy/Kulit%20Rotate.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnatomi" /></div>
         <div class="product-info"><span class="product-tag">Modul Anatomi</span><h4>X-ray Vision</h4><p>Bagian pada model 3D dapat ditampilkan secara x-ray.</p></div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBiology/Bakteri.webp" alt="NusaBiologi" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBiology/Bakteri.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaBiology/Bakteri-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaBiology/Bakteri.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaBiologi" /></div>
         <div class="product-info"><span class="product-tag">Modul Biologi</span><h4>Dunia Mikroskopik</h4><p>Pembahasan mendalam mengenai dunia mikroskopik seperti bakteri, sel, hingga struktur botani.</p></div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBiology/virus.webp" alt="NusaBiologi" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBiology/virus.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaBiology/virus-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaBiology/virus.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaBiologi" /></div>
         <div class="product-info"><span class="product-tag">Modul Biologi</span><h4>Virus</h4><p>Pembelajaran seputar struktur sel virus.</p></div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBiology/X-ray Daun.webp" alt="NusaBiologi" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaBiology/X-ray Daun.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaBiology/X-ray%20Daun-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaBiology/X-ray%20Daun.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaBiologi" /></div>
         <div class="product-info"><span class="product-tag">Modul Biologi</span><h4>3D Highlighting</h4><p>Model 3D terpisah berkualitas tinggi.</p></div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnimal/Domestik.webp" alt="NusaAnimal" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnimal/Domestik.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnimal/Domestik-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnimal/Domestik.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnimal" /></div>
         <div class="product-info"><span class="product-tag">Modul Zoologi</span><h4>Ragam Habitat</h4><p>Eksplorasi anatomi hewan yang berbeda habitat.</p></div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnimal/Animasi.webp" alt="NusaAnimal" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnimal/Animasi.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnimal/Animasi-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnimal/Animasi.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnimal" /></div>
         <div class="product-info"><span class="product-tag">Modul Zoologi</span><h4>Animasi Akurat</h4><p>Animasi yang secara akurat menggambarkan bagaimana hewan bergerak.</p></div>
       </div>
       <div class="product-card">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaPhysic/seriparalel no hud.webp" alt="NusaPhysic" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaPhysic/seriparalel no hud.webp" width="1600" height="873" srcset="assets/NusaSuites-%20Screenshot/NusaPhysic/seriparalel%20no%20hud-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaPhysic/seriparalel%20no%20hud.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaPhysic" /></div>
         <div class="product-info"><span class="product-tag">Modul Fisika</span><h4>Real-time Experiment</h4><p>Eksperimen dengan efek yang langsung bisa diamati.</p></div>
       </div>
       <div class="product-card product-toggle">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaPhysic/ribuaninstrumenphysics.webp" alt="NusaPhysic" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaPhysic/ribuaninstrumenphysics.webp" width="1024" height="768" srcset="assets/NusaSuites-%20Screenshot/NusaPhysic/ribuaninstrumenphysics-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaPhysic/ribuaninstrumenphysics.webp 1024w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaPhysic" /></div>
         <div class="product-info"><span class="product-tag">Modul Fisika</span><h4>Ratusan Instrument</h4><p>Ratusan peralatan yang dapat digunakan secara langsung tanpa batas.</p></div>
       </div>
       <div class="product-card product-toggle">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaChemical/Thermite no hud.webp" alt="NusaAnimal" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaChemical/Thermite no hud.webp" width="1600" height="873" srcset="assets/NusaSuites-%20Screenshot/NusaChemical/Thermite%20no%20hud-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaChemical/Thermite%20no%20hud.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnimal" /></div>
         <div class="product-info"><span class="product-tag">Modul Kimia</span><h4>Tanpa Bahaya, Tanpa Biaya</h4><p>Lakukan eksperimen yang berbahaya sekalipun tanpa perlu takut resiko keselamatan dan biaya.</p></div>
       </div>
       <div class="product-card product-toggle">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaChemical/amanchemical.webp" alt="NusaChemical" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaChemical/amanchemical.webp" width="1024" height="768" srcset="assets/NusaSuites-%20Screenshot/NusaChemical/amanchemical-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaChemical/amanchemical.webp 1024w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaChemical" /></div>
         <div class="product-info"><span class="product-tag">Modul Kimia</span><h4>Eksperimen yang Akurat</h4><p>Tentukan unsur yang akan diuji dengan volume yang dapat disesuaikan.</p></div>
       </div>
       <!-- <div class="product-card product-toggle">
-        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnimal/Ensiklopedia Harimau.webp" alt="NusaAnimal" /></div>
+        <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnimal/Ensiklopedia Harimau.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnimal/Ensiklopedia%20Harimau-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnimal/Ensiklopedia%20Harimau.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnimal" /></div>
         <div class="product-info"><span class="product-tag">Modul Kimia</span><h4>Eksperimen yang Akurat</h4><p>Tentukan unsur yang akan diuji dengan volume yang dapat disesuaikan.</p></div>
       </div> -->
       
-      <div class="product-card selengkapnya-button">
-        <!-- <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnimal/Ensiklopedia Harimau.webp" alt="NusaAnimal" /></div> -->
+      <div class="product-card selengkapnya-button" role="button" tabindex="0" aria-expanded="false">
+        <!-- <div class="product-img-wrap"><img loading="lazy" decoding="async" src="assets/NusaSuites- Screenshot/NusaAnimal/Ensiklopedia Harimau.webp" width="1600" height="900" srcset="assets/NusaSuites-%20Screenshot/NusaAnimal/Ensiklopedia%20Harimau-640.webp 640w, assets/NusaSuites-%20Screenshot/NusaAnimal/Ensiklopedia%20Harimau.webp 1600w" sizes="(max-width: 540px) calc(100vw - 56px), (max-width: 980px) calc(50vw - 40px), 300px" alt="NusaAnimal" /></div> -->
         <div class="product-info-modified"><h4 id="see_more"><u>Lihat Selengkapnya ></u></h4><p id="see-more-p">Munculkan modul pembelajaran lainnya.</p></div>
       </div>
     </div>
@@ -1242,9 +1136,10 @@
         <h5>Platform</h5>
         <ul>
           <li><a href="#platform">NusaCerdasOS</a></li>
-          <li><a href="#hub">The Hub</a></li>
-          <li><a href="#lab">Lab Virtual</a></li>
-          <li><a href="#lokal">Hiper-Lokalisasi</a></li>
+          <li><a href="dasbor-kelas.html">Dasbor Kelas</a></li>
+          <li><a href="lab-virtual.html">Lab Virtual</a></li>
+          <li><a href="pustaka-digital.html">Pustaka Digital</a></li>
+          <li><a href="nusaquiz.html">NusaQuiz</a></li>
         </ul>
       </div>
       <div>
@@ -1274,841 +1169,7 @@
   </div>
 </footer>
 
-<script>
-
-
-  document.querySelector("#quiz-option-1").addEventListener("click", () => {
-    document.querySelector("#image-quiz-1").classList.add("active");
-    
-    document.querySelector("#image-quiz-2").classList.remove("active");
-    document.querySelector("#image-quiz-3").classList.remove("active");
-    // document.querySelector("#image-quiz-4").classList.remove("active");
-  });
-  document.querySelector("#quiz-option-2").addEventListener("click", () => {
-    document.querySelector("#image-quiz-2").classList.add("active");
-    
-    document.querySelector("#image-quiz-1").classList.remove("active");
-    document.querySelector("#image-quiz-3").classList.remove("active");
-    // document.querySelector("#image-quiz-4").classList.remove("active");
-  });
-  document.querySelector("#quiz-option-3").addEventListener("click", () => {
-    document.querySelector("#image-quiz-3").classList.add("active");
-    
-    document.querySelector("#image-quiz-2").classList.remove("active");
-    document.querySelector("#image-quiz-1").classList.remove("active");
-    // document.querySelector("#image-quiz-4").classList.remove("active");
-  });
-  // document.querySelector("#quiz-option-4").addEventListener("click", () => {
-  //   document.querySelector("#image-quiz-4").classList.add("active");
-    
-  //   document.querySelector("#image-quiz-2").classList.remove("active");
-  //   document.querySelector("#image-quiz-3").classList.remove("active");
-  //   document.querySelector("#image-quiz-1").classList.remove("active");
-  // });
-
-
-
-  /* === Reveal-on-scroll === */
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        if (e.target.querySelector && e.target.querySelector('.count-up')) {
-          e.target.querySelectorAll('.count-up').forEach(animateCountUp);
-        }
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll(
-    'section, .product-card, .quote-card, .problem-card, .trust-card, .stat-band-inner, .stat-cell, .product-grid, .quote-grid, .problem-grid, .solution-grid, .trust-grid, .comparison-grid, .compare-card'
-  ).forEach(el => {
-    el.classList.add('reveal');
-    io.observe(el);
-  });
-
-  /* === Count-up === */
-  function animateCountUp(el) {
-    if (el.dataset.done) return;
-    el.dataset.done = '1';
-    const target = parseInt(el.dataset.target, 10);
-    const suffix = el.dataset.suffix || '';
-    const duration = 1400;
-    const start = performance.now();
-    function tick(now) {
-      const t = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - t, 3);
-      el.textContent = Math.round(target * eased) + suffix;
-      if (t < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
-  /* === Nav auto-hide on scroll down, reveal on scroll up === */
-  const nav = document.querySelector('nav');
-  let lastScrollY = window.scrollY;
-  function updateNav() {
-    const y = window.scrollY;
-    if (y > 30) nav.classList.add('scrolled');
-    else nav.classList.remove('scrolled');
-    if (y > lastScrollY && y > 80) nav.classList.add('nav-hidden');
-    else nav.classList.remove('nav-hidden');
-    lastScrollY = y;
-  }
-  window.addEventListener('scroll', updateNav, { passive: true });
-  updateNav();
-
-  /* === Feature: Adaptive rendering — device capability detection === */
-  const isLowEnd = (() => {
-    const cores = navigator.hardwareConcurrency || 4;
-    const memory = navigator.deviceMemory || 4;
-    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    return cores < 4 || memory < 4 || (isMobile && cores < 6);
-  })();
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // Layout untuk efek scroll dimatikan lewat CSS body.reduced-motion, jadi JS-nya juga harus berhenti
-  const disableScrollFX = prefersReduced || isLowEnd;
-  if (disableScrollFX) {
-    document.body.classList.add('reduced-motion');
-  }
-
-  /* === Hero image parallax zoom === */
-  function updateHeroParallax() {
-    if (disableScrollFX) return;
-    const heroImg = document.querySelector('.hero-visual-img .hero-slide.active img');
-    if (!heroImg) return;
-    const rect = heroImg.getBoundingClientRect();
-    const progress = Math.max(0, Math.min(1, -rect.top / (rect.height || 1)));
-    heroImg.style.setProperty('--hero-img-scale', (1.06 + progress * 0.08).toFixed(3));
-    heroImg.style.transform = `scale(${1.06 + progress * 0.08}) translateY(${progress * -20}px)`;
-  }
-  window.addEventListener('scroll', updateHeroParallax, { passive: true });
-  updateHeroParallax();
-
-  /* === Hero Slider === */
-  (function () {
-    const slides = document.querySelectorAll('.hero-visual-img .hero-slide');
-    const dots   = document.querySelectorAll('.hero-visual-img .hero-dot');
-    if (!slides.length) return;
-    let current = 0;
-    let timer;
-
-    function goTo(idx) {
-      slides[current].classList.remove('active');
-      dots[current].classList.remove('active');
-      current = (idx + slides.length) % slides.length;
-      slides[current].classList.add('active');
-      dots[current].classList.add('active');
-    }
-
-    function resetTimer() {
-      clearInterval(timer);
-      timer = setInterval(function () { goTo(current + 1); }, 4000);
-    }
-
-    document.querySelector('.hero-slider-prev')?.addEventListener('click', function () { goTo(current - 1); resetTimer(); });
-    document.querySelector('.hero-slider-next')?.addEventListener('click', function () { goTo(current + 1); resetTimer(); });
-    dots.forEach(function (dot, i) {
-      dot.addEventListener('click', function () { goTo(i); resetTimer(); });
-    });
-
-    resetTimer();
-  })();
-
-  /* === Pinned scroll narrative === */
-  const pinnedWrap = document.querySelector('.pinned-narrative');
-  const pinnedTextSlides = document.querySelectorAll('.pinned-text-slide');
-  const pinnedImages = document.querySelectorAll('.pinned-image-stack img');
-  const pinnedBg = document.querySelector('.pinned-bg');
-  let currentSlide = -1;
-
-  function updatePinned() {
-    if (!pinnedWrap || pinnedTextSlides.length === 0) return;
-    const rect = pinnedWrap.getBoundingClientRect();
-    const wrapHeight = pinnedWrap.offsetHeight;
-    const winH = window.innerHeight;
-    const scrollIntoWrap = -rect.top;
-    const scrollableLength = wrapHeight - winH;
-    const progress = Math.max(0, Math.min(1, scrollIntoWrap / scrollableLength));
-    const slideCount = pinnedTextSlides.length;
-    let idx = Math.floor(progress * slideCount);
-    if (idx >= slideCount) idx = slideCount - 1;
-
-    if (idx !== currentSlide) {
-      currentSlide = idx;
-      pinnedTextSlides.forEach((s, i) => s.classList.toggle('active', i === idx));
-      pinnedImages.forEach((s, i) => s.classList.toggle('active', i === idx));
-    }
-    if (pinnedBg) {
-      const x = 30 + (idx * 20);
-      const y = 50 + (idx * 10) - 10;
-      pinnedBg.style.setProperty('--bg-x', x + '%');
-      pinnedBg.style.setProperty('--bg-y', y + '%');
-    }
-  }
-  window.addEventListener('scroll', updatePinned, { passive: true });
-  updatePinned();
-
-  /* === Smooth scroll for anchors === */
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const href = a.getAttribute('href');
-      if (href.length > 1) {
-        const target = document.querySelector(href);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }
-    });
-  });
-
-  /* === See More toggle === */
-  (function () {
-    const btn = document.querySelector('.selengkapnya-button');
-    const toggleCards = document.querySelectorAll('.product-toggle');
-    if (!btn || !toggleCards.length) return;
-    let expanded = false;
-    btn.addEventListener('click', function () {
-      expanded = !expanded;
-      toggleCards.forEach(function (card) {
-        card.style.display = expanded ? 'flex' : 'none';
-      });
-      const label = btn.querySelector('u');
-      if (label) label.textContent = expanded ? 'Sembunyikan <' : 'Lihat Selengkapnya >';
-    });
-  })();
-
-  (function () {
-    const overlay   = document.getElementById('ytModalOverlay');
-    const container = document.getElementById('ytModalContainer');
-    const iframe    = document.getElementById('ytIframe');
-
-    // Fungsi buka modal — panggil ini dari tombol kamu
-    window.openYTModal = function (videoId) {
-      iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
-      overlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    };
-
-    // Fungsi tutup modal
-    window.closeYTModal = function () {
-      overlay.classList.remove('active');
-      setTimeout(function () {
-        iframe.src = '';
-        document.body.style.overflow = '';
-      }, 300);
-    };
-
-    // Klik di luar video
-    overlay.addEventListener('click', function (e) {
-      if (!container.contains(e.target)) closeYTModal();
-    });
-
-    // Tombol tutup mobile
-    document.getElementById('ytCloseMobile').addEventListener('click', closeYTModal);
-
-    // Tekan ESC
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && overlay.classList.contains('active')) closeYTModal();
-    });
-  })();
-
-  /* === Solution cards: per-card staggered reveal === */
-  const solutionGrid = document.querySelector('.solution-grid');
-  if (solutionGrid) {
-    const cards = solutionGrid.querySelectorAll('.solution-card');
-    const solutionIO = new IntersectionObserver((entries, obs) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          cards.forEach((card, i) => {
-            setTimeout(() => card.classList.add('card-in'), i * 140);
-          });
-          obs.disconnect();
-        }
-      });
-    }, { threshold: 0.2 });
-    solutionIO.observe(solutionGrid);
-  }
-
-
-
-  /* ============================================== */
-  /* ====== CINEMATIC ENGINE ===================== */
-  /* ============================================== */
-
-  /* === Feature: Lenis-style smooth-scroll engine (momentum scrolling) === */
-  /* Lightweight inline smooth-scroll using requestAnimationFrame + lerp */
-  const SmoothScroll = (() => {
-    if (prefersReduced) return { current: () => window.scrollY };
-    let target = window.scrollY;
-    let current = window.scrollY;
-    const ease = 0.1; // lerp factor — feel free to tune
-    let rafId = null;
-
-    function loop() {
-      current += (target - current) * ease;
-      if (Math.abs(target - current) < 0.5) {
-        current = target;
-      }
-      // Drive RAF-based scroll-linked animations (we don't actually move the page —
-      // browser handles native scroll. We just expose `current` for reading.)
-      if (Math.abs(target - current) > 0.1) {
-        rafId = requestAnimationFrame(loop);
-      } else {
-        rafId = null;
-      }
-    }
-
-    window.addEventListener('scroll', () => {
-      target = window.scrollY;
-      if (!rafId) rafId = requestAnimationFrame(loop);
-    }, { passive: true });
-
-    return {
-      current: () => current,
-      target: () => target,
-    };
-  })();
-
-  /* === Feature: Scroll-driven cinematic hero === */
-  const cinematicHero = document.querySelector('.cinematic-hero');
-  const cinematicHeroStage = document.querySelector('.cinematic-hero-stage');
-  const cinematicHeroContent = document.querySelector('.cinematic-hero-content');
-  const cinematicHeroTitle = document.querySelector('.cinematic-hero-title');
-  const cinematicHeroSub = document.querySelector('.cinematic-hero-sub');
-  const depthLayers = document.querySelectorAll('.cinematic-hero .depth-layer');
-
-  function updateCinematicHero() {
-    if (!cinematicHero || disableScrollFX) return;
-    const rect = cinematicHero.getBoundingClientRect();
-    // Progress 0 → 1 across the entire pinned section (ukur stage, bukan innerHeight yang berubah saat toolbar iOS muncul)
-    const sectionH = cinematicHero.offsetHeight - cinematicHeroStage.offsetHeight;
-    if (sectionH <= 0) return;
-    const progress = Math.max(0, Math.min(1, -rect.top / sectionH));
-
-    // GPU-only transforms (translate3d, scale, opacity)
-    const scale = 1 + progress * 0.5;            // zoom in as we scroll
-    const zPush = progress * -200;                // push back in z
-    const titleY = progress * -120;
-    const titleOpacity = 1 - progress * 0.8;
-    const subOpacity = 1 - progress * 1.2;
-
-    if (cinematicHeroContent) {
-      cinematicHeroContent.style.setProperty('--hero-scale', scale.toFixed(3));
-      cinematicHeroContent.style.setProperty('--hero-z', zPush.toFixed(1) + 'px');
-    }
-    if (cinematicHeroTitle) {
-      cinematicHeroTitle.style.setProperty('--title-y', titleY.toFixed(1) + 'px');
-      cinematicHeroTitle.style.setProperty('--title-opacity', Math.max(0, titleOpacity).toFixed(3));
-    }
-    if (cinematicHeroSub) {
-      cinematicHeroSub.style.setProperty('--sub-y', (titleY * 0.6).toFixed(1) + 'px');
-      cinematicHeroSub.style.setProperty('--sub-opacity', Math.max(0, subOpacity).toFixed(3));
-    }
-    // Parallax depth layers — each moves at its own speed (spatial depth)
-    depthLayers.forEach(layer => {
-      const depth = parseFloat(layer.dataset.depth || 0.5);
-      const offset = progress * 300 * depth;
-      layer.style.setProperty('--depth-y', '-' + offset.toFixed(1) + 'px');
-    });
-  }
-
-  /* === Feature: Scroll-scrubbed product reveal (image sequence simulation) === */
-  const productReveal = document.querySelector('.product-reveal');
-  const deviceFrames = document.querySelectorAll('.device-frame');
-  const captionGroups = document.querySelectorAll('[data-caption]');
-  const progressDots = document.querySelectorAll('.reveal-progress-dot');
-  const productRevealStage = document.querySelector('.product-reveal-stage');
-  let currentFrame = -1;
-
-  // Tanpa efek scroll: tampilkan frame pertama secara statis agar section tidak kosong
-  if (disableScrollFX) {
-    deviceFrames[0]?.classList.add('active');
-    progressDots[0]?.classList.add('active');
-  }
-
-  function updateProductReveal() {
-    if (!productReveal || disableScrollFX) return;
-    const rect = productReveal.getBoundingClientRect();
-    const sectionH = productReveal.offsetHeight - productRevealStage.offsetHeight;
-    if (sectionH <= 0) return;
-    const progress = Math.max(0, Math.min(1, -rect.top / sectionH));
-
-    // Map continuous progress to discrete frames (4 frames total)
-    const totalFrames = 4;
-    const segmentLength = 1 / totalFrames;
-    let frameIndex = Math.min(totalFrames - 1, Math.floor(progress * totalFrames));
-    const localProgress = (progress - frameIndex * segmentLength) / segmentLength;
-
-    // Cross-fade frames
-    if (frameIndex !== currentFrame) {
-      currentFrame = frameIndex;
-      deviceFrames.forEach((f, i) => f.classList.toggle('active', i === frameIndex));
-      // Show only the matching caption group
-      captionGroups.forEach(c => {
-        const matches = parseInt(c.dataset.caption, 10) === frameIndex;
-        c.style.display = matches ? '' : 'none';
-      });
-      progressDots.forEach((d, i) => d.classList.toggle('active', i === frameIndex));
-    }
-
-    // Within-frame motion: scale and rotate the active device frame for cinematic motion
-    deviceFrames.forEach((f, i) => {
-      if (i === frameIndex) {
-        // gentle scale-up + slight tilt while it's the active frame
-        const scale = 0.94 + localProgress * 0.06;
-        const ry = (localProgress - 0.5) * 4; // -2deg → +2deg
-        const rx = (1 - localProgress) * 2;   // 2deg → 0deg
-        f.style.setProperty('--frame-scale', scale.toFixed(3));
-        f.style.setProperty('--frame-ry', ry.toFixed(1) + 'deg');
-        f.style.setProperty('--frame-rx', rx.toFixed(1) + 'deg');
-      }
-    });
-
-    // Caption fade animation
-    const captionOpacity = Math.min(1, localProgress * 3); // fade in quickly
-    const captionY = Math.max(0, (1 - captionOpacity) * 20);
-    document.querySelectorAll(`[data-caption="${frameIndex}"]`).forEach(c => {
-      c.style.setProperty('--caption-opacity', captionOpacity.toFixed(3));
-      c.style.setProperty('--caption-y', captionY.toFixed(1) + 'px');
-    });
-  }
-
-  /* === Feature: Horizontal scroll-pinned showcase === */
-  const horizontalPin = document.querySelector('.horizontal-pin');
-  const horizontalTrack = document.querySelector('.horizontal-track');
-
-  function updateHorizontalPin() {
-    if (!horizontalPin || !horizontalTrack || disableScrollFX) return;
-    const rect = horizontalPin.getBoundingClientRect();
-    const sectionH = horizontalPin.offsetHeight - window.innerHeight;
-    if (sectionH <= 0) return;
-    const progress = Math.max(0, Math.min(1, -rect.top / sectionH));
-
-    // Move the track horizontally — translate3d for GPU
-    const trackWidth = horizontalTrack.scrollWidth;
-    const viewW = window.innerWidth;
-    const maxOffset = trackWidth - viewW + 80;
-    const offset = -progress * maxOffset;
-    horizontalTrack.style.setProperty('--h-x', offset.toFixed(1) + 'px');
-  }
-
-  /* === Feature: Cinematic particle field (Canvas overlay, GPU-friendly) === */
-  const canvas = document.getElementById('particle-canvas');
-  if (canvas && !prefersReduced && !isLowEnd) {
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    const PARTICLE_COUNT = isLowEnd ? 20 : 60;
-
-    function resizeCanvas() {
-      const rect = canvas.parentElement.getBoundingClientRect();
-      canvas.width = rect.width * window.devicePixelRatio;
-      canvas.height = rect.height * window.devicePixelRatio;
-      canvas.style.width = rect.width + 'px';
-      canvas.style.height = rect.height + 'px';
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    function initParticles() {
-      const rect = canvas.parentElement.getBoundingClientRect();
-      particles = [];
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        particles.push({
-          x: Math.random() * rect.width,
-          y: Math.random() * rect.height,
-          r: Math.random() * 1.5 + 0.5,
-          vx: (Math.random() - 0.5) * 0.2,
-          vy: (Math.random() - 0.5) * 0.2,
-          opacity: Math.random() * 0.5 + 0.2,
-        });
-      }
-    }
-    initParticles();
-    window.addEventListener('resize', initParticles);
-
-    let canvasRafId = null;
-    let isCanvasVisible = false;
-
-    function animateParticles() {
-      const rect = canvas.parentElement.getBoundingClientRect();
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = rect.width;
-        if (p.x > rect.width) p.x = 0;
-        if (p.y < 0) p.y = rect.height;
-        if (p.y > rect.height) p.y = 0;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(200, 15, 46, ${p.opacity})`;
-        ctx.fill();
-      });
-      if (isCanvasVisible) canvasRafId = requestAnimationFrame(animateParticles);
-    }
-
-    // Only animate when canvas is in view (battery efficiency)
-    const canvasIO = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        isCanvasVisible = e.isIntersecting;
-        if (isCanvasVisible && !canvasRafId) {
-          canvasRafId = requestAnimationFrame(animateParticles);
-        } else if (!isCanvasVisible && canvasRafId) {
-          cancelAnimationFrame(canvasRafId);
-          canvasRafId = null;
-        }
-      });
-    }, { threshold: 0 });
-    canvasIO.observe(canvas);
-  }
-
-  /* === Master RAF loop: run all cinematic updates in sync === */
-  let masterRafId = null;
-  let isScrolling = false;
-  let scrollEndTimer = null;
-
-  function masterUpdate() {
-    updateCinematicHero();
-    updateProductReveal();
-    updateHorizontalPin();
-    if (isScrolling) {
-      masterRafId = requestAnimationFrame(masterUpdate);
-    } else {
-      masterRafId = null;
-    }
-  }
-
-  window.addEventListener('scroll', () => {
-    isScrolling = true;
-    if (!masterRafId) masterRafId = requestAnimationFrame(masterUpdate);
-    clearTimeout(scrollEndTimer);
-    scrollEndTimer = setTimeout(() => {
-      isScrolling = false;
-    }, 100);
-  }, { passive: true });
-
-  // Initial paint
-  masterUpdate();
-
-  /* === Mega-menu (Produk dropdown) === */
-  (function() {
-    const dropdown = document.getElementById('produkDropdown');
-    const trigger  = document.getElementById('produkTrigger');
-    const menu     = document.getElementById('produkMenu');
-    const backdrop = document.getElementById('mmBackdrop');
-    const quizCta  = document.getElementById('mmQuizCta');
-    if (!dropdown || !menu) return;
-
-    let closeTimer = null;
-
-    function openMenu() {
-      clearTimeout(closeTimer);
-      dropdown.classList.add('open');
-      menu.classList.add('open');
-      backdrop.classList.add('open');
-      menu.setAttribute('aria-hidden', 'false');
-      trigger.setAttribute('aria-expanded', 'true');
-    }
-    function closeMenu() {
-      dropdown.classList.remove('open');
-      menu.classList.remove('open');
-      backdrop.classList.remove('open');
-      menu.setAttribute('aria-hidden', 'true');
-      trigger.setAttribute('aria-expanded', 'false');
-    }
-    function scheduleClose() {
-      clearTimeout(closeTimer);
-      closeTimer = setTimeout(closeMenu, 200);
-    }
-
-    // Open on hover (desktop)
-    dropdown.addEventListener('mouseenter', openMenu);
-    dropdown.addEventListener('mouseleave', scheduleClose);
-    menu.addEventListener('mouseenter', () => clearTimeout(closeTimer));
-    menu.addEventListener('mouseleave', scheduleClose);
-
-    // Click to toggle (works on mobile and as keyboard fallback)
-    trigger.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (menu.classList.contains('open')) closeMenu();
-      else openMenu();
-    });
-
-    // Close on backdrop click
-    backdrop.addEventListener('click', closeMenu);
-
-    // Close on Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && menu.classList.contains('open')) closeMenu();
-    });
-
-    // Close menu after any in-menu link click + smooth-scroll
-    menu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', (e) => {
-        const href = a.getAttribute('href');
-        if (href && href.startsWith('#') && href.length > 1) {
-          e.preventDefault();
-          closeMenu();
-          setTimeout(() => {
-            const target = document.querySelector(href);
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 200);
-        }
-      });
-    });
-  })();
-
-
-
-  /* === NusaQuiz feature rows: staggered cinematic entrance === */
-  (function() {
-    const list = document.querySelector('.quiz-feature-list');
-    if (!list) return;
-    const rows = list.querySelectorAll('.quiz-feature-row');
-    const io = new IntersectionObserver((entries, obs) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          rows.forEach((row, i) => {
-            setTimeout(() => row.classList.add('row-in'), i * 180);
-          });
-          obs.disconnect();
-        }
-      });
-    }, { threshold: 0.2 });
-    io.observe(list);
-  })();
-
-	// CONFIGURATION DATA PIPELINE MATRIX
-        // List your custom file names inside the correct folder array below.
-        const fileDatabase = {
-            NusaBiology: [
-                'bungamekar.webp',
-                'ecoli.webp',
-				'fotosintesis.webp',
-				'jenistanaman.webp',
-				'rafflesia.webp'
-            ],
-			NusaFisika: [
-                'Bandul.webp',
-                'Bangku Optik.webp',
-                'Bidang Miring.webp',
-                'Katrol.webp',
-                'Lampu Bohlam.webp',
-				'Magnet 3.webp',
-				'Optik 2.webp',
-				'Timbangan.webp'
-            ],
-			NusaChem: [
-                'etanol.webp',
-                'natrium.webp',
-				'protein.webp'
-            ],
-            NusaMath: [
-                'fungsi.webp',
-				'sudut.webp',
-                'keliling2.webp',
-                'volume.webp',
-				'luas.webp',
-				'phytagoras.webp',
-				'poligon.webp',
-				'tools.webp'
-            ],
-            NusaPeriodic: [
-                'home.webp',
-				'deskripsi.webp',
-                'carbon.webp',
-                'cesium.webp',
-				'john.webp',
-				'produk1.webp',
-				'produk2.webp',
-				'tahun.webp'
-            ]
-        };
-
-        const imageList = [];
-        let currentIndex = 0;
-        let isModalOpen = false;
-
-        const galleryModal = document.getElementById('galleryModal');
-        const galleryFrame = document.getElementById('galleryFrame');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const thumbnailGrid = document.getElementById('thumbnailGrid');
-
-        // Dynamic Initialization routing via dashboard click string parameter
-        function openSubjectGallery(subjectKey) {
-            const files = fileDatabase[subjectKey];
-            const folderPath = `assets/${subjectKey}/`;
-            
-            if (!files || files.length === 0) return;
-
-            // Clear previous session arrays data records
-            imageList.length = 0;
-
-            // Remap array matching the newly targeting source folder path 
-            files.forEach(fileName => {
-                imageList.push(folderPath + fileName);
-            });
-
-            // Build fresh layout controls and open the window view
-            generateGalleryUI();
-            galleryModal.style.display = 'flex';
-            isModalOpen = true;
-            viewImg(0); 
-        }
-
-        function generateGalleryUI() {
-            thumbnailGrid.innerHTML = ''; 
-            
-            imageList.forEach((url, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'thumb-btn';
-                btn.onclick = () => viewImg(index);
-                btn.innerHTML = `<img loading="lazy" decoding="async" src="${url}" alt="Asset ${index + 1}">`;
-                thumbnailGrid.appendChild(btn);
-            });
-        }
-
-        function closeGalleryModal() {
-            galleryModal.style.display = 'none';
-            galleryFrame.src = '';
-            isModalOpen = false;
-        }
-
-    function closeGalleryModal() {
-        galleryModal.style.display = 'none';
-        galleryFrame.src = '';
-        isModalOpen = false;
-    }
-
-    function viewImg(index) {
-        currentIndex = index;
-        galleryFrame.src = imageList[currentIndex];
-            
-        const buttons = thumbnailGrid.getElementsByClassName('thumb-btn');
-        for (let i = 0; i < buttons.length; i++) {
-            if (i === currentIndex) {
-                buttons[i].classList.add('active');
-                buttons[i].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } else {
-                buttons[i].classList.remove('active');
-            }
-        }
-
-        // Boundary checks for navigation buttons
-        prevBtn.style.display = (currentIndex === 0) ? 'none' : 'flex';
-        nextBtn.style.display = (currentIndex === imageList.length - 1) ? 'none' : 'flex';
-    }
-
-    function navigateGallery(direction) {
-        let targetIndex = currentIndex + direction;
-        if (targetIndex >= 0 && targetIndex < imageList.length) {
-            viewImg(targetIndex);
-        }
-    }
-
-    // Keyboard arrow inputs pipeline
-    document.addEventListener('keydown', function(event) {
-        if (!isModalOpen) return;
-        if (event.key === 'ArrowRight') navigateGallery(1);
-        else if (event.key === 'ArrowLeft') navigateGallery(-1);
-        else if (event.key === 'Escape') closeGalleryModal();
-    });
-
-    // Run framework building sequence
-    initImageArray();
-    generateGalleryUI();
-
-</script>
-
-<!-- 
-        <div class="cat-product">
-          <div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusamessage.webp" alt="NusaMessage" /></div>
-          <div class="cat-product-info">
-            <h4>NusaMessage</h4>
-            <p>Saluran pesan resmi untuk komunikasi langsung dari lembaga pemerintah kepada siswa dan guru.</p>
-          </div>
-        </div>
-        <div class="cat-product">
-          <div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusaanalytic.webp" alt="NusaAnalytic" /></div>
-          <div class="cat-product-info">
-            <h4>NusaAnalytic</h4>
-            <p>Analitik cerdas untuk memantau, mengelola, dan mengoptimalkan penggunaan aplikasi melalui data real-time.</p>
-          </div>
-        </div>
-        <div class="cat-product">
-          <div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusanote.webp" alt="NusaNote" /></div>
-          <div class="cat-product-info">
-            <h4>NusaNote</h4>
-            <p>Pencatat digital dengan instrumen pengukuran, alat geometri, ekspor PDF, dan putar ulang pelajaran.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- LAB VIRTUAL content -->
-    <div class="cat-content" data-cat-content="lab" hidden>
-      <div class="cat-eyebrow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        Lab Virtual
-      </div>
-      <p class="cat-title">Simulasi 3D imersif untuk sains.</p>
-      <p class="cat-lede">Mengganti diagram buku teks dengan model tiga dimensi yang dapat disentuh, diputar, dan dijelajahi siswa — eksperimen yang berbahaya atau mahal kini dapat dilakukan setiap hari di setiap sekolah.</p>
-
-      <div class="cat-product-grid">
-        <div class="cat-product"><div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/3d-anatomi.webp" alt="NusaAnatomi" /></div><div class="cat-product-info"><h4>NusaAnatomi</h4><p>Eksplorasi mendalam tubuh manusia menggunakan model 3D interaktif yang detail.</p></div></div>
-        <div class="cat-product"><div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusabiologi.webp" alt="NusaBiologi" /></div><div class="cat-product-info"><h4>NusaBiologi</h4><p>Pembelajaran biologi imersif melalui visual 2D &amp; 3D tentang organisme dan konsep lab.</p></div></div>
-        <div class="cat-product"><div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusahewan.webp" alt="NusaHewan" /></div><div class="cat-product-info"><h4>NusaHewan</h4><p>Pengalaman belajar hewan interaktif menggabungkan pengetahuan ilmiah dengan keanekaragaman hayati.</p></div></div>
-        <div class="cat-product"><div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusaplanet.webp" alt="NusaPlanet" /></div><div class="cat-product-info"><h4>NusaPlanet</h4><p>Eksplorasi tata surya 3D interaktif dengan fenomena astronomi yang memukau.</p></div></div>
-        <div class="cat-product"><div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusaperiodik.webp" alt="NusaPeriodik" /></div><div class="cat-product-info"><h4>NusaPeriodik</h4><p>Tabel periodik interaktif menghubungkan unsur kimia dengan produk dan aplikasi sehari-hari.</p></div></div>
-        <div class="cat-product"><div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusachemical.webp" alt="NusaChemical" /></div><div class="cat-product-info"><h4>NusaChemical</h4><p>Eksperimen kimia virtual yang aman dengan reaksi interaktif dan modul lab siap pakai.</p></div></div>
-        <div class="cat-product"><div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusaphysic.webp" alt="NusaPhysic" /></div><div class="cat-product-info"><h4>NusaPhysic</h4><p>Laboratorium fisika virtual tak terbatas — mekanika, listrik, magnetisme, optik dalam simulasi presisi.</p></div></div>
-        <div class="cat-product"><div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusamath.webp" alt="NusaMath" /></div><div class="cat-product-info"><h4>NusaMath</h4><p>Pembelajaran matematika interaktif dengan modul siap pakai dan visualisasi 3D real-time.</p></div></div>
-      </div>
-    </div>
-
-    <!-- LIBRARY content -->
-    <div class="cat-content" data-cat-content="library" hidden>
-      <div class="cat-eyebrow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        Pustaka Digital
-      </div>
-      <p class="cat-title">Buku digital dengan pendamping cerdas.</p>
-      <p class="cat-lede">Database masif buku teks offline untuk semua tingkatan, dilengkapi pendamping AI dan modul khusus untuk PAUD, Madrasah, dan kurikulum lokal Indonesia.</p>
-
-      <div class="cat-product-grid">
-        <div class="cat-product"><div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusabook.webp" alt="NusaBook" /></div><div class="cat-product-info"><h4>NusaBook</h4><p>Database masif buku teks offline untuk semua tingkatan — SD hingga SMK, tanpa internet.</p></div></div>
-        <div class="cat-product"><div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusahub.webp" alt="NusaHub" /></div><div class="cat-product-info"><h4>NusaHub <span style="background:var(--red); color:white; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:700; letter-spacing:0.04em;">AI</span></h4><p>Platform terpadu dengan pendamping AI yang menyatukan semua aplikasi pembelajaran ke dalam satu antarmuka.</p></div></div>
-        <div class="cat-product"><div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusanet.webp" alt="NusaBook Link" /></div><div class="cat-product-info"><h4>NusaBook Link</h4><p>Pustaka jaringan berbasis intranet untuk konektivitas multi-perangkat tanpa akses internet.</p></div></div>
-        <div class="cat-product"><div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusakids.webp" alt="NusaKids" /></div><div class="cat-product-info"><h4>NusaKids</h4><p>Permainan pembelajaran kreatif yang memadukan budaya, seni, dan pendidikan dasar untuk anak usia dini.</p></div></div>
-        <div class="cat-product"><div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusamuslim.webp" alt="NusaMuslim" /></div><div class="cat-product-info"><h4>NusaMuslim</h4><p>Paket edukasi Islam dengan Iqro interaktif, animasi kisah Nabi, dan panduan sholat sempurna.</p></div></div>
-        <div class="cat-product"><div class="cat-product-img"><img loading="lazy" decoding="async" src="assets/embedded/nusamap.webp" alt="NusaMap" /></div><div class="cat-product-info"><h4>NusaMap</h4><p>Eksplorasi dunia 3D interaktif dengan landmark negara, wawasan budaya, dan mata uang.</p></div></div>
-      </div>
-    </div>
-
-    <!-- QUIZ content (links into the dedicated section below) -->
-    <div class="cat-content" data-cat-content="quiz" hidden>
-      <div class="cat-eyebrow">
-        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        NusaQuiz · Favorit
-      </div>
-      <p class="cat-title">Kuis interaktif favorit siswa &amp; guru.</p>
-      <p class="cat-lede">Pelajari lebih lanjut tentang bagaimana NusaQuiz mengubah penilaian membosankan menjadi acara kelas yang ditunggu-tunggu — dengan AI yang menghasilkan soal instan dan koreksi otomatis.</p>
-      <div style="text-align: center; margin-top: 28px;">
-        <a href="#nusaquiz" class="btn-primary" id="goToQuizSection" style="display:inline-flex; padding:16px 32px;">
-          Jelajahi NusaQuiz selengkapnya
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:8px;"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </div>
-
-  </div>
-</div>
+<script src="main.js"></script>
 
 </body>
 </html>
