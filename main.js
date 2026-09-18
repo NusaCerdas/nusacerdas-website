@@ -516,10 +516,8 @@ const fileDatabase = {
   NusaPeriodic: ['home.webp', 'deskripsi.webp', 'carbon.webp', 'cesium.webp', 'john.webp', 'produk1.webp', 'produk2.webp', 'tahun.webp'],
   // Sampul sementara — ganti dengan nama file screenshot .webp di assets/NusaCoding/ dan assets/NusaEnglish/
   NusaAnatomy: [
-    'assets/NusaSuites- Screenshot/NusaAnatomy/Main Menu.webp',
-    'assets/NusaSuites- Screenshot/NusaAnatomy/Jantung.webp',
-    'assets/NusaSuites- Screenshot/NusaAnatomy/Kulit.webp',
-    'assets/NusaSuites- Screenshot/NusaAnatomy/Kulit Rotate.webp',
+    'body-explorer-kerangka.webp', 'body-explorer-saraf.webp', 'lab-aliran-darah.webp', 'lab-aliran-darah-jantung.webp',
+    'lab-pernapasan.webp', 'lab-pencernaan.webp', 'lab-pendengaran.webp',
   ],
   NusaCoding: ['cover.webp'],
   NusaEnglish: ['cover.webp'],

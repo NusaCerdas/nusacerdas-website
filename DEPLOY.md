@@ -25,7 +25,7 @@ Panduan deploy perubahan terbaru dari GitHub ke server produksi.
 6. Jalankan:
    ```bash
    cd /home
-   cd /ssh
+   cd ssh/
    ./alpha.sh
    ```
 7. Setelah masuk ke root alpha, pindah ke user `aqso`:
