@@ -2779,3 +2779,6 @@ footer ul a[aria-current="page"] { text-decoration: underline; text-underline-of
 /* Area klik minimum 32px tanpa menggeser layout */
 .site-nav .nav-links a { padding-block: 10px; }
 footer ul a { min-width: 32px; }
+
+/* Tag produk di latar gelap: merah terang agar kontras WCAG AA (≥ 4,5:1) */
+.dark-section .product-tag { color: #ff6b85; }

@@ -514,6 +514,15 @@ const fileDatabase = {
   NusaChem: ['etanol.webp', 'natrium.webp', 'protein.webp'],
   NusaMath: ['fungsi.webp', 'sudut.webp', 'keliling2.webp', 'volume.webp', 'luas.webp', 'phytagoras.webp', 'poligon.webp', 'tools.webp'],
   NusaPeriodic: ['home.webp', 'deskripsi.webp', 'carbon.webp', 'cesium.webp', 'john.webp', 'produk1.webp', 'produk2.webp', 'tahun.webp'],
+  // Sampul sementara — ganti dengan nama file screenshot .webp di assets/NusaCoding/ dan assets/NusaEnglish/
+  NusaAnatomy: [
+    'assets/NusaSuites- Screenshot/NusaAnatomy/Main Menu.webp',
+    'assets/NusaSuites- Screenshot/NusaAnatomy/Jantung.webp',
+    'assets/NusaSuites- Screenshot/NusaAnatomy/Kulit.webp',
+    'assets/NusaSuites- Screenshot/NusaAnatomy/Kulit Rotate.webp',
+  ],
+  NusaCoding: ['cover.webp'],
+  NusaEnglish: ['cover.webp'],
 };
 
 const imageList = [];
@@ -532,7 +541,8 @@ function openSubjectGallery(subjectKey) {
   if (!galleryModal || !files || files.length === 0) return;
 
   imageList.length = 0;
-  files.forEach(fileName => imageList.push(`assets/${subjectKey}/${fileName}`));
+  // Entri berisi '/' dianggap path lengkap (mis. screenshot di assets/NusaSuites- Screenshot/...)
+  files.forEach(fileName => imageList.push(fileName.includes('/') ? fileName : `assets/${subjectKey}/${fileName}`));
 
   generateGalleryUI(subjectKey);
   galleryReturnFocus = document.activeElement;
