@@ -509,7 +509,7 @@
    tambahkan namanya ke fileDatabase.
    ================================================================ */
 const fileDatabase = {
-  NusaBiology: ['bungamekar.webp', 'ecoli.webp', 'fotosintesis.webp', 'jenistanaman.webp', 'rafflesia.webp'],
+  NusaBiology: ['mikroorganisme.webp', 'virus-bulat.webp', 'struktur-daun.webp', 'pertumbuhan-biji.webp', 'bunga-bangkai.webp', 'bioremediasi.webp', 'proses-kompos.webp'],
   NusaFisika: ['Bandul.webp', 'Bangku Optik.webp', 'Bidang Miring.webp', 'Katrol.webp', 'Lampu Bohlam.webp', 'Magnet 3.webp', 'Optik 2.webp', 'Timbangan.webp'],
   NusaChem: ['etanol.webp', 'natrium.webp', 'protein.webp'],
   NusaMath: ['fungsi.webp', 'sudut.webp', 'keliling2.webp', 'volume.webp', 'luas.webp', 'phytagoras.webp', 'poligon.webp', 'tools.webp'],
